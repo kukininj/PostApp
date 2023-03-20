@@ -4,21 +4,13 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Login from "./pages/login";
 import Home from "./pages/home";
 import { createRoot } from "react-dom/client"
+import Navbar from "./pages/navbar";
 
 function App() {
     return (
         <BrowserRouter>
             <div>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to='/'>Home</Link>
-                        </li>
-                        <li>
-                            <Link to='/login'>Login</Link>
-                        </li>
-                    </ul>
-                </nav>
+                <Navbar />
                 <Routes>
                     <Route path='/' Component={Home} />
                     <Route path='/login' Component={Login} />
@@ -28,7 +20,9 @@ function App() {
     );
 }
 
-const root = createRoot(document.getElementById("root"));
+const rootElement = document.getElementById("root");
+if (rootElement === null) throw new Error('Failed to find root element')
+const root = createRoot(rootElement);
 
 root.render(
     <App />
