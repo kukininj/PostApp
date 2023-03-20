@@ -36,7 +36,7 @@ const PostsList: React.FC<PostList> = ({ posts }) => {
                         <h2 className="col">{post.title}</h2>
                         <h3 className="col col-lg-2">{post.price}</h3>
                     </div>
-                    <div>
+                    <div className="row">
                         <p>{post.area}</p>
                         <p>{post.date}</p>
                     </div>
@@ -52,7 +52,7 @@ const PostsList: React.FC<PostList> = ({ posts }) => {
 }
 
 const LatestPosts: React.FC<{}> = () => {
-    const [posts, setPosts] = React.useState([EmptyPost, EmptyPost, EmptyPost]);
+    const [posts, setPosts] = React.useState([EmptyPost]);
 
     return (
         <PostsList posts={posts} />
