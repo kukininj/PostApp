@@ -5,17 +5,17 @@ import Login from "./pages/login";
 import Home from "./pages/home";
 import { createRoot } from "react-dom/client"
 import Navbar from "./pages/navbar";
+import PostPage from "./pages/post-page";
 
 function App() {
     return (
         <BrowserRouter>
-            <div>
-                <Navbar />
-                <Routes>
-                    <Route path='/' Component={Home} />
-                    <Route path='/login' Component={Login} />
-                </Routes>
-            </div>
+            <Navbar />
+            <Routes>
+                <Route path='/' Component={Home} />
+                <Route path='/login' Component={Login} />
+                <Route path='/post/:postID' Component={PostPage} />
+            </Routes>
         </BrowserRouter>
     );
 }
