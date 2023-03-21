@@ -32,20 +32,22 @@ const PortableMenu: React.FC<{}> = () => {
 
 const Navbar: React.FC<{}> = () => {
     return (
-        <div className={"navbar navbar-fixed-top"}>
+        <div className="navbar navbar-fixed-top">
             <Link to="/">
-                <img src="img/logo.svb" className="logo" />
+                <img className="logo navbar-brand" src="img/logo.svg" />
             </Link>
-            <div className={"search-bar"}>
-                <div className={"search-input"}>
+            <div className="search-bar hstack gap-3">
+                <div className="search-input">
                     <input type="text" name="search-querry-input" />
                 </div>
-                <hr className={"vertical"} />
-                <div className={"class-select"}>
-                    <svg></svg>
+                <div className="vr" ></div>
+                <div className="class-select hstack">
+                    <div>{Icons.location}</div>
                     <input type="text" name="area-input" />
                 </div>
-                <div className={"submit-search"}></div>
+                <div className="submit-search">
+                    {Icons.search}
+                </div>
             </div>
             <PortableMenu />
         </div>
