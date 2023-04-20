@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 
 @Entity
-class Post {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

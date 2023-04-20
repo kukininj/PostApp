@@ -12,7 +12,7 @@ enum Status {
     Rejected;
 }
 @Entity
-class Transaction {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

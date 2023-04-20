@@ -3,7 +3,7 @@ package com.kukininj.PostApp.models;
 import jakarta.persistence.*;
 
 @Entity
-class Conversation {
+public class Conversation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
