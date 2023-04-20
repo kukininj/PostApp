@@ -7,8 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PageController {
 
-    @GetMapping(path = { "/login", "/register", "/search", "/home" }, produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(path = {
+            "/",
+            "/login",
+            "/account",
+            "/search/**",
+            "/post/**",
+            "/error",
+    }, produces = MediaType.TEXT_HTML_VALUE)
     public String getSinglePage() {
-        return "index.html";
+        return "/index.html";
     }
 }
