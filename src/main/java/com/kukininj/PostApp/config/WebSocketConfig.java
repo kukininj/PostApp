@@ -14,11 +14,13 @@ import org.springframework.web.socket.config.annotation.*;
 
 @Configuration
 @EnableWebSocket
-@EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketConfigurer, WebSocketMessageBrokerConfigurer {
+public class WebSocketConfig implements WebSocketConfigurer {
+    @Autowired
+    private WSConnectionHandler wsConnectionHandler;
 
+    @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new WSConnectionHandler(), "/ws");
+        registry.addHandler(wsConnectionHandler, "/ws");
     }
 
     // @Override
@@ -26,9 +28,5 @@ public class WebSocketConfig implements WebSocketConfigurer, WebSocketMessageBro
     //     config.enableSimpleBroker("/topic/", "/queue/");
     //     config.setApplicationDestinationPrefixes("/app");
     // }
-
-    @Scheduled
-    public void pingConnections() {
-    }
 
 }

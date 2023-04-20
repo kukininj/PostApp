@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kukininj.PostApp.communication.messages.IMessage;
 import com.kukininj.PostApp.communication.messages.MessageType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -61,7 +62,13 @@ public class WSConnectionHandler extends TextWebSocketHandler {
     }
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        //the messages will be broadcasted to all users.
         sessions.add(session);
+    }
+
+    @Override
+    public void afterConnectionClosed(WebSocketSession session,
+                                      CloseStatus closeStatus)
+            throws Exception {
+        sessions.remove(session);
     }
 }
