@@ -6,23 +6,38 @@ import Home from "./pages/home";
 import { createRoot } from "react-dom/client"
 import Navbar from "./pages/navbar";
 import PostPage from "./pages/post-page";
+import AccountPage from "./pages/account";
+import { AppContext, State } from "./Api/app-context";
+import ErrorPage from "./pages/error";
+import { Communication } from "./Api/communication";
 
 function App() {
+    const [state, dispatch] = React.useReducer(
+        State.reducer, new State()
+    );
+
     return (
-        <BrowserRouter>
-            <Navbar />
-            <Routes>
-                <Route path='/' Component={Home} />
-                <Route path='/login' Component={Login} />
-                <Route path='/post/:postID' Component={PostPage} />
-            </Routes>
-        </BrowserRouter>
+        <AppContext.Provider value={state}>
+            <BrowserRouter>
+                <Navbar />
+                <Routes>
+                    <Route path='/' Component={Home} />
+                    <Route path='/login' Component={Login} />
+                    <Route path='/post/:postID' Component={PostPage} />
+                    <Route path='/account' Component={AccountPage} />
+                    <Route path='*' Component={ErrorPage} />
+                </Routes>
+            </BrowserRouter>
+        </AppContext.Provider>
     );
 }
 
 const rootElement = document.getElementById("root");
 if (rootElement === null) throw new Error('Failed to find root element')
+
 const root = createRoot(rootElement);
+
+window.API = Communication.open();
 
 root.render(
     <App />
