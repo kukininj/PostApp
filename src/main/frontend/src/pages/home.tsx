@@ -1,79 +1,40 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom'
-import { Post, Category } from '../types'
+import { AppContext } from '../Api/app-context';
+import { Category } from '../types'
+import { LatestPosts } from './post-components'
 
 const FeaturedCategories: React.FC<{}> = () => {
     const categories = [
-        new Category("Motoryzacja", "moto"),
-        new Category("Elektronika", "elektronika")
+        new Category("Motoryzacja", "moto", new URL("/images/categories/car-front-fill.svg", document.location.href)),
+        new Category("Elektronika", "elektronika", new URL("/images/categories/motherboard-fill.svg", document.location.href)),
+        new Category("Hobby", "hobby", new URL("/images/categories/book-half.svg", document.location.href)),
+        new Category("Kolarstwo", "kolarstwo", new URL("/images/categories/bicycle.svg", document.location.href)),
+        new Category("Biżuteria", "bizuteria", new URL("/images/categories/gem.svg", document.location.href)),
+        new Category("Narzędzia", "tarzedzia", new URL("/images/categories/hammer.svg", document.location.href)),
     ];
     let categoriesComponents = categories.map((category) => {
         return (
-            <Link className="d-flex justify-content-center flex-column p-2" to={`/search/${category.name}`} key={category.name}>
-                <img className="rounded-circle bg-secondary text-center" src="" alt="obrazek" width="100px" height="100px" />
-                <p className="text-center">{category.title}</p>
-            </Link>
+            <div className="d-flex justify-content-center flex-column p-2" key={category.name}>
+                <div className="rounded-circle flex-shrink-0 felx-grow-1 shadow p-3 btn btn-info link" style={{ aspectRatio: "1/1", width: "85px", height: "" }}>
+                    <img className="text-center img-responsive w-100 h-100" src={category.url.href} alt="obrazek" />
+                </div>
+                <Link className="text-center link-dark text-decoration-none" to={`/search/${category.name}`} >{category.title}</Link>
+            </div>
         )
     })
     return (
-        <div className="categories-list d-flex flex-wrap">
+        <div className="d-flex flex-wrap bg-light rounded rounded-5 justify-content-center shadow" >
             {categoriesComponents}
         </div>
     );
 }
 
-const EmptyPost: Post = {
-    id: "0",
-    title: "Tytuł ogłoszenia",
-    about: "opis",
-    price: "2137 zł",
-    picture: undefined,
-    area: "Kraków",
-    date: "02.02.2020",
-};
-
-
-const PostsList: React.FC<{
-    posts: Post[]
-}> = ({ posts }) => {
-    let postComponents = posts.map((post) => {
-        return (
-            <div className="post-element row" key={post.id}>
-                <img className="col-sm-auto" src={post.picture?.href || ""} alt="obrazek" />
-                <div className="post-element-info col">
-                    <div className="row">
-                        <Link className="col" to={`/post/${post.id}`}>
-                            <h2>{post.title}</h2>
-                        </Link>
-                        <h3 className="col col-lg-2 align-self-end">{post.price}</h3>
-                    </div>
-                    <div className="row">
-                        <p>{post.area}</p>
-                        <p>{post.date}</p>
-                    </div>
-                </div>
-            </div>
-        )
-    });
-    return (
-        <div className="post-list container">
-            {postComponents}
-        </div>
-    );
-}
-
-const LatestPosts: React.FC<{}> = () => {
-    const [posts, setPosts] = React.useState([EmptyPost]);
-
-    return (
-        <PostsList posts={posts} />
-    )
-}
-
 const Home: React.FC<{}> = () => {
+    const state = React.useContext(AppContext);
+
     return (
-        <main className="container">
-            <h2>Home</h2>
+        <main className="gap-sm-3 d-sm-grid container">
             <FeaturedCategories />
             <LatestPosts />
         </main>
