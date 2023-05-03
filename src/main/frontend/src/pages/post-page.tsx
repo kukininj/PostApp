@@ -1,38 +1,32 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom'
 import { Post, User } from '../types'
-
-const EmptyPost: Post = {
-    id: "0",
-    title: "Tytuł ogłoszenia",
-    about: "opis",
-    price: "2137 zł",
-    picture: undefined,
-    area: "Kraków",
-    date: "02.02.2020",
-};
+import { EmptyPost } from './post-components';
 
 const SampleAuthor: User = {
     id: "0",
     name: "Jan",
     surname: "Kowalski",
     joinDate: new Date(2020, 2, 2),
-    picture: new URL("https://localhost/img/profile.png"),
+    picture: new URL("/images/users/person.svg", document.location.href),
 }
 
 const PostPage: React.FC<{}> = () => {
     const [post, setPost] = React.useState(EmptyPost);
     const [author, setAuthor] = React.useState(SampleAuthor);
     const { postID } = useParams();
-    console.log(postID);
     return (
-        <main className="container-lg">
-            <div className="row">
-                <div className="col-lg-8">
-                    <img src={post.picture?.href} alt="obrazek ogłoszenie" className="img-fluid" />
+        <main className="container-lg" >
+            <div className="row gap-3">
+                <div className="col-auto col-md mx-auto rounded-5 p-5 bg-light shadow">
+                    <div style={{ height: "200px" }}>
+                        <img className="d-block h-100 mx-auto" src={post.picture?.href} alt="obrazek ogłoszenie" />
+                    </div>
+                    <br />
                     <div className="container-fluid">
                         <h1>{post.title}</h1>
                         <h2><b>{post.price}</b></h2>
+                        <hr />
                         <div>
                             <h3>Opis</h3>
                             <div>
@@ -47,17 +41,17 @@ const PostPage: React.FC<{}> = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-lg-4 justify-content-lg-end">
-                    <h5>Autor</h5>
-                    <div className="author-info row">
-                        <img className="img-thumbnail rounded col-sm-auto bg-secondary" width="100px" height="100px" src={author.picture.href} alt="profilowe"/>
-                        <div className="col">
-                        <h2 className="row">{author.name + " " + author.surname}</h2>
-                        <h6 className="row">Dołączył: {author.joinDate.toDateString()}</h6>
+                <div className="col-auto mx-auto">
+                    <div className="rounded-5 p-5 w-100 h-auto bg-light shadow">
+                        <img className="img-thumbnail rounded" width="100px" height="100px" src={author.picture.href} alt="profilowe" />
+                        <div className="p-1">
+                            <h2 className="p-1">{author.name + " " + author.surname}</h2>
+                            <h6 className="p-1">Dołączył: {author.joinDate.toDateString()}</h6>
                         </div>
+                        <button type="button" className="btn btn-info">Wyślij wiadomość</button>
                     </div>
-                    <button type="button" className="btn btn-secondary row">Wyślij wiadomość</button>
                 </div>
+
             </div>
         </main>
     );
