@@ -1,32 +1,31 @@
 import * as React from "react";
+import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 
-interface Props {
-    name: string;
-}
-
-const Input: React.FC<{ label: string; type: string; }> = ({ label, type }) => {
-    let id = `form_${label}`
+const Login: React.FC<{}> = () => {
     return (
-        <div className="form-outline mb-4">
-            <label className="form-label" htmlFor={id}>{label}</label>
-            <input type={type} id={id} className="form-control" />
-        </div>
-    );
-};
+        <main className="container-lg">
+            <Row className="gap-3 justify-content-center p-3">
+                <Form className="col-md-auto bg-light rounded-5 p-5 container-md" action="/login" method="POST">
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Adres e-mail</Form.Label>
+                        <Form.Control type="email" placeholder="test@example.com" />
+                        <Form.Text className="text-muted">
+                            Nigdy nikomu nie przekażemy Twojego adresu e-mail. Obiecujemy ( ͡° ͜ʖ ͡°)
+                        </Form.Text>
+                    </Form.Group>
 
-const Login: React.FC<Props> = () => {
-    return (
-        <main>
-            <form method="POST" action="/login">
-                <Input label="Email address" type="text"/>
-                <Input label="Password" type="password"/>
-
-                <button type="submit" className="btn btn-primary btn-block mb-4">Sign in</button>
-
-                <div className="text-center">
-                    <p>Not a member? <a href="#!">Register</a></p>
-                </div>
-            </form>
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label>Hasło</Form.Label>
+                        <Form.Control type="password" placeholder="*******" />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Zaloguj się
+                    </Button>
+                </Form>
+                <Col>
+                    <Image className="w-100 d-block" style={{maxHeight: "500px"}} src="/images/PostApp.svg"/>
+                </Col>
+            </Row>
         </main>
     );
 }
