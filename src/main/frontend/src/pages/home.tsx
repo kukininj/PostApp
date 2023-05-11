@@ -15,12 +15,18 @@ const FeaturedCategories: React.FC<{}> = () => {
     ];
     let categoriesComponents = categories.map((category) => {
         return (
-            <div className="d-flex justify-content-center flex-column p-2" key={category.name}>
-                <div className="rounded-circle flex-shrink-0 felx-grow-1 shadow p-3 btn btn-info link" style={{ aspectRatio: "1/1", width: "85px", height: "" }}>
+            <Link to={`/search/${category.name}`}
+                className="d-flex justify-content-center flex-column p-2 text-center link-dark text-decoration-none"
+                key={category.name} >
+
+                <div className="rounded-circle flex-shrink-0 felx-grow-1 shadow p-3 btn btn-info link"
+                    style={{ aspectRatio: "1/1", width: "85px", height: "" }}>
+
                     <img className="text-center img-responsive w-100 h-100" src={category.url.href} alt="obrazek" />
+
                 </div>
-                <Link className="text-center link-dark text-decoration-none" to={`/search/${category.name}`} >{category.title}</Link>
-            </div>
+                {category.title}
+            </Link>
         )
     })
     return (

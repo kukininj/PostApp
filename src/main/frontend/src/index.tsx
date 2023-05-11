@@ -10,6 +10,7 @@ import AccountPage from "./pages/account";
 import { AppContext, State } from "./Api/app-context";
 import ErrorPage from "./pages/error";
 import { Communication } from "./Api/communication";
+import { Register } from "./pages/register";
 
 function App() {
     const [state, dispatch] = React.useReducer(
@@ -23,6 +24,7 @@ function App() {
                 <Routes>
                     <Route path='/' Component={Home} />
                     <Route path='/login' Component={Login} />
+                    <Route path='/register' Component={Register} />
                     <Route path='/post/:postID' Component={PostPage} />
                     <Route path='/account' Component={AccountPage} />
                     <Route path='*' Component={ErrorPage} />
