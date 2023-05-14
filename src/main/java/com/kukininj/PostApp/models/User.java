@@ -13,8 +13,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    Boolean merchant;
-
     String name;
     String surname;
 
