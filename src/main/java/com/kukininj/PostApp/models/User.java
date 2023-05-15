@@ -1,25 +1,32 @@
 package com.kukininj.PostApp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="users")
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    public Long id;
 
-    String name;
-    String surname;
+    public String name;
+    public String surname;
+    @JsonIgnore
+    public String passwordHash;
 
     @Column(unique = true)
-    String email;
-    LocalDateTime joined;
+    public String email;
+    public LocalDateTime joined;
 
+    @JsonIgnore
     @OneToMany
-    List<Post> favourites;
+    public List<Post> favourites;
+
+    public User() { }
 }
