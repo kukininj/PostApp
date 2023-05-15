@@ -2,15 +2,31 @@ package com.kukininj.PostApp.models.responsemodels;
 
 import org.springframework.http.ResponseEntity;
 
+import java.util.Optional;
+
 public class SetProfilePictureResponse {
-    public static SetProfilePictureResponse Success = new SetProfilePictureResponse("success");
-    public static SetProfilePictureResponse Fail = new SetProfilePictureResponse("fail");
+    enum Status {
+        OK,
+        FAIL
+    }
+    static SetProfilePictureResponse success = new SetProfilePictureResponse(Status.OK);
 
-    public final String status;
-    public final int id;
+    public final Status status;
+    public final Optional<String> error;
 
-    SetProfilePictureResponse(String status) {
-        this.status = status;
-        this.id = 10;
+    SetProfilePictureResponse(Status status) {
+        this.status = Status.OK;
+        this.error = Optional.empty();
+    }
+    SetProfilePictureResponse(Exception e) {
+        this.status = Status.FAIL;
+        this.error = Optional.of(e.getMessage());
+    }
+
+    public static SetProfilePictureResponse Success() {
+        return success;
+    }
+    public static SetProfilePictureResponse Fail(Exception e) {
+        return new SetProfilePictureResponse(e);
     }
 }

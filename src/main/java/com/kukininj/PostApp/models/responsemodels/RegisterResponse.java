@@ -1,14 +1,33 @@
 package com.kukininj.PostApp.models.responsemodels;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.kukininj.PostApp.models.User;
+
+import java.util.Optional;
+
 public class RegisterResponse {
-    public static RegisterResponse Success = new RegisterResponse("success");
-    public static RegisterResponse Fail = new RegisterResponse("fail");
+    enum Status {
+        OK,
+        FAIL
+    }
+    public final Optional<String> error;
+    public final Optional<User> user;
 
-    public final String status;
-    public final int id;
+    RegisterResponse(Exception e) {
+        this.error = Optional.of(e.getMessage());
+        this.user = Optional.empty();
+    }
 
-    RegisterResponse(String status) {
-        this.status = status;
-        this.id = 10;
+    RegisterResponse(User user) {
+        this.error = Optional.empty();
+        this.user = Optional.of(user);
+    }
+
+    public static RegisterResponse Fail(Exception e) {
+        return new RegisterResponse(e);
+    }
+    public static RegisterResponse Success(User user) {
+        return new RegisterResponse(user);
     }
 }
