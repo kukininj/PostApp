@@ -35,21 +35,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .cors().disable()
-                .authorizeHttpRequests()
-                .anyRequest().permitAll()
-                // .requestMatchers("/css/*", "/images/*", "/js/*", "/ws", "/login", "/").permitAll()
-                // .requestMatchers("/ws-logged-in").authenticated()
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .and()
-                .httpBasic()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                .maximumSessions(10);
+                .csrf(csrf -> {
+                    csrf.disable();
+                })
+                .cors(cors -> {
+                    cors.disable();
+                })
+                .authorizeHttpRequests(configurer -> {
+                    configurer.anyRequest().permitAll();
+                    // .requestMatchers("/css/*", "/images/*", "/js/*", "/ws", "/login", "/").permitAll()
+                    // .requestMatchers("/ws-logged-in").authenticated()
+                })
+                .logout(httpSecurityLogoutConfigurer -> {
+                    httpSecurityLogoutConfigurer.logoutUrl("/logout");
+                })
+                .sessionManagement(httpSecuritySessionManagementConfigurer -> {
+                    httpSecuritySessionManagementConfigurer.maximumSessions(10);
+                    httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+                }) ;
 
         return http.build();
     }
