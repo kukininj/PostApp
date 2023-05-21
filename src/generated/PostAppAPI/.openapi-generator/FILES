@@ -1,0 +1,17 @@
+.gitignore
+.npmignore
+.openapi-generator-ignore
+README.md
+package.json
+src/apis/ChatControllerApi.ts
+src/apis/PostControllerApi.ts
+src/apis/UserControllerApi.ts
+src/apis/index.ts
+src/index.ts
+src/models/RegisterForm.ts
+src/models/RegisterResponse.ts
+src/models/SetProfilePictureResponse.ts
+src/models/User.ts
+src/models/index.ts
+src/runtime.ts
+tsconfig.json
