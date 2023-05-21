@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -61,12 +62,9 @@ public class UserController {
     ) {
         try {
             User user = userService.addUser(form.email, form.password, form.surname, form.firstname);
-            return ResponseEntity
-                    .ok(T.Success(user));
+            return T.Success(user);
         } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(T.Fail(e));
+            return T.Fail(e);
         }
     }
 

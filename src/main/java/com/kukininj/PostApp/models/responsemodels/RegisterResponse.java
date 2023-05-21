@@ -3,14 +3,12 @@ package com.kukininj.PostApp.models.responsemodels;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.kukininj.PostApp.models.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
 public class RegisterResponse {
-    enum Status {
-        OK,
-        FAIL
-    }
     public final Optional<String> error;
     public final Optional<User> user;
 
@@ -24,10 +22,10 @@ public class RegisterResponse {
         this.user = Optional.of(user);
     }
 
-    public static RegisterResponse Fail(Exception e) {
-        return new RegisterResponse(e);
+    public static ResponseEntity<RegisterResponse> Fail(Exception e) {
+        return ResponseEntity.ok(new RegisterResponse(e));
     }
-    public static RegisterResponse Success(User user) {
-        return new RegisterResponse(user);
+    public static ResponseEntity<RegisterResponse> Success(User user) {
+        return ResponseEntity.ok(new RegisterResponse(user));
     }
 }
