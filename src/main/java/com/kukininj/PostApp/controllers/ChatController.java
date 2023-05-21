@@ -2,6 +2,7 @@ package com.kukininj.PostApp.controllers;
 
 import com.kukininj.PostApp.models.Message;
 import com.kukininj.PostApp.models.Conversation ;
+import org.springframework.http.ResponseEntity;
 import org.springframework.session.Session;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,14 +14,14 @@ import java.util.List;
 @RestController("/chat")
 public class ChatController {
     @GetMapping("/get_messages/{chat_id}")
-    public List<Message> getMessages(Session session, @PathVariable long chat_id) {
+    public ResponseEntity<List<Message>> getMessages(@PathVariable long chat_id) {
         // TODO
-        return new ArrayList<>();
+        return ResponseEntity.ok(new ArrayList<>());
     }
 
     @GetMapping("/get_conversations")
-    public List<Conversation> getConversations(Session session) {
+    public ResponseEntity<List<Conversation>> getConversations() {
         // TODO
-        return new ArrayList<>();
+        return ResponseEntity.ok(new ArrayList<>());
     }
 }
