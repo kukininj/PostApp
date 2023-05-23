@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { Picture } from './Picture';
+import {
+    PictureFromJSON,
+    PictureFromJSONTyped,
+    PictureToJSON,
+} from './Picture';
+
 /**
  * 
  * @export
@@ -49,6 +56,12 @@ export interface User {
      * @memberof User
      */
     joined?: Date;
+    /**
+     * 
+     * @type {Picture}
+     * @memberof User
+     */
+    picture?: Picture;
 }
 
 /**
@@ -75,6 +88,7 @@ export function UserFromJSONTyped(json: any, ignoreDiscriminator: boolean): User
         'surname': !exists(json, 'surname') ? undefined : json['surname'],
         'email': !exists(json, 'email') ? undefined : json['email'],
         'joined': !exists(json, 'joined') ? undefined : (new Date(json['joined'])),
+        'picture': !exists(json, 'picture') ? undefined : PictureFromJSON(json['picture']),
     };
 }
 
@@ -92,6 +106,7 @@ export function UserToJSON(value?: User | null): any {
         'surname': value.surname,
         'email': value.email,
         'joined': value.joined === undefined ? undefined : (value.joined.toISOString()),
+        'picture': PictureToJSON(value.picture),
     };
 }
 

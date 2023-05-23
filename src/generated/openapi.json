@@ -1,1 +1,342 @@
-{"openapi":"3.0.1","info":{"title":"OpenAPI definition","version":"v0"},"servers":[{"url":"http://localhost:8080","description":"Generated server url"}],"paths":{"/create/{post_id}":{"put":{"tags":["post-controller"],"operationId":"addPost","parameters":[{"name":"post_id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Post"}}}}}}},"/user/setProfilePicture":{"post":{"tags":["user-controller"],"operationId":"setProfilePicture","requestBody":{"content":{"multipart/form-data":{"schema":{"required":["picture"],"type":"object","properties":{"picture":{"type":"string","format":"binary"}}}}}},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SetProfilePictureResponse"}}}}}}},"/register":{"post":{"tags":["user-controller"],"operationId":"register","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/RegisterForm"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/RegisterResponse"}}}}}}},"/login":{"post":{"tags":["user-controller"],"operationId":"login","parameters":[{"name":"email","in":"query","required":true,"schema":{"type":"string"}},{"name":"password","in":"query","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK"}}}},"/user/getUserInfo":{"get":{"tags":["user-controller"],"operationId":"getUserInfo","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/User"}}}}}}},"/user/getActiveUsers":{"get":{"tags":["user-controller"],"operationId":"getActiveUsers","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/User"}}}}}}}},"/get_messages/{chat_id}":{"get":{"tags":["chat-controller"],"operationId":"getMessages","parameters":[{"name":"chat_id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Message"}}}}}}}},"/get_conversations":{"get":{"tags":["chat-controller"],"operationId":"getConversations","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Conversation"}}}}}}}},"/get/{post_id}":{"get":{"tags":["post-controller"],"operationId":"getPost","parameters":[{"name":"post_id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Post"}}}}}}}},"components":{"schemas":{"Post":{"type":"object"},"SetProfilePictureResponse":{"type":"object","properties":{"status":{"type":"string","enum":["OK","FAIL"]},"error":{"type":"string"}}},"RegisterForm":{"type":"object","properties":{"email":{"type":"string"},"password":{"type":"string"},"firstname":{"type":"string"},"surname":{"type":"string"}}},"RegisterResponse":{"type":"object","properties":{"error":{"type":"string"},"user":{"$ref":"#/components/schemas/User"}}},"User":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"type":"string"},"surname":{"type":"string"},"email":{"type":"string"},"joined":{"type":"string","format":"date-time"}}},"Message":{"type":"object"},"Conversation":{"type":"object"}}}}
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "OpenAPI definition",
+    "version" : "v0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8080",
+    "description" : "Generated server url"
+  } ],
+  "paths" : {
+    "/create/{post_id}" : {
+      "put" : {
+        "tags" : [ "post-controller" ],
+        "operationId" : "addPost",
+        "parameters" : [ {
+          "name" : "post_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/setProfilePicture" : {
+      "post" : {
+        "tags" : [ "user-controller" ],
+        "operationId" : "setProfilePicture",
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "required" : [ "picture" ],
+                "type" : "object",
+                "properties" : {
+                  "picture" : {
+                    "type" : "string",
+                    "format" : "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SetProfilePictureResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/register" : {
+      "post" : {
+        "tags" : [ "user-controller" ],
+        "operationId" : "register",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RegisterForm"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RegisterResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login" : {
+      "post" : {
+        "tags" : [ "user-controller" ],
+        "operationId" : "login",
+        "parameters" : [ {
+          "name" : "email",
+          "in" : "query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "password",
+          "in" : "query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/user/getUserInfo" : {
+      "get" : {
+        "tags" : [ "user-controller" ],
+        "operationId" : "getUserInfo",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/getActiveUsers" : {
+      "get" : {
+        "tags" : [ "user-controller" ],
+        "operationId" : "getActiveUsers",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_messages/{chat_id}" : {
+      "get" : {
+        "tags" : [ "chat-controller" ],
+        "operationId" : "getMessages",
+        "parameters" : [ {
+          "name" : "chat_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Message"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_conversations" : {
+      "get" : {
+        "tags" : [ "chat-controller" ],
+        "operationId" : "getConversations",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Conversation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/{post_id}" : {
+      "get" : {
+        "tags" : [ "post-controller" ],
+        "operationId" : "getPost",
+        "parameters" : [ {
+          "name" : "post_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Post" : {
+        "type" : "object"
+      },
+      "SetProfilePictureResponse" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "enum" : [ "OK", "FAIL" ]
+          },
+          "error" : {
+            "type" : "string"
+          }
+        }
+      },
+      "RegisterForm" : {
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "firstname" : {
+            "type" : "string"
+          },
+          "surname" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Picture" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "filePath" : {
+            "type" : "string"
+          },
+          "added" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "RegisterResponse" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "type" : "string"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          }
+        }
+      },
+      "User" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "surname" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "joined" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "picture" : {
+            "$ref" : "#/components/schemas/Picture"
+          }
+        }
+      },
+      "Message" : {
+        "type" : "object"
+      },
+      "Conversation" : {
+        "type" : "object"
+      }
+    }
+  }
+}
