@@ -1,12 +1,17 @@
 import { SimpleAwaitingClientResponse, SimpleAwaitingMerchantResponse, SimpleFinishedSuccessfully, SimpleNotViewed, SimpleRejected, TransactionID } from "./transaction";
-
+import { User } from "PostAppAPI"
 export const SimpleUser: User = {
-    id: "0",
+    id: 0,
     name: "Jan",
     surname: "Kowalski",
     email: "jan.kowalski@post.app",
-    joinDate: new Date(2020, 2, 2),
-    picture: new URL("/images/users/person.svg", document.location.href),
+    joined: new Date(2020, 2, 2),
+    picture: {
+        filePath: "/images/users/person.svg",
+        id: 0,
+        title: "profilowe Jana",
+        added: new Date(2020, 2, 2),
+    }
 }
 
 export class UserID {
@@ -20,13 +25,4 @@ export class UserID {
         // TODO: actually fetch the user 
         return user;
     }
-}
-
-export interface User {
-    id: string;
-    name: string;
-    surname: string;
-    email: string;
-    joinDate: Date;
-    picture: URL;
 }

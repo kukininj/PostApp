@@ -4,6 +4,7 @@ import { SimpleAwaitingClientResponse, SimpleFinishedSuccessfully, SimpleNotView
 import { AppContext } from '../Api/app-context'
 import { SimpleUser } from '../types/user';
 import { TransactionSmallList } from './transaction-components';
+import { Users } from '../Api';
 
 const AccountPage: React.FC<{}> = () => {
     const state = React.useContext(AppContext);
@@ -11,12 +12,29 @@ const AccountPage: React.FC<{}> = () => {
     const [pending, setPending] = React.useState([SimpleAwaitingClientResponse, SimpleNotViewed, SimpleNotViewed, SimpleNotViewed, SimpleNotViewed, SimpleNotViewed]);
     const [finished, setFinished] = React.useState([SimpleRejected, SimpleFinishedSuccessfully]);
 
-    console.log(state);
+    const getApiData = async () => {
+        const user = await Users.getUserInfo();
+
+        setUser(user);
+    }
+
+    React.useEffect(() => {
+        Users.getUserInfo()
+            .then(user => {
+                console.log(user);
+                if (!user.picture) {
+                    user.picture = {};
+                    user.picture.filePath = "/images/posts/question-square-fill.svg";
+                }
+                setUser(user);
+            });
+    }, []);
+
     return (
         <main className="container-lg">
             <div className="row m-2 gap-2">
                 <div className="col-md-auto bg-light rounded-5 p-2 p-md-5">
-                    <img className="d-block img-thumbnail mx-auto" width="100px" height="100px" src={user.picture.href} alt="profilowe" />
+                    <img className="d-block img-thumbnail mx-auto" width="100px" height="100px" src={user.picture?.filePath}  alt="profilowe" />
                     <div className="p-1">
                         <h2 className="p-1 text-center">{user.name + " " + user.surname}</h2>
                         <h6 className="p-1 text-center">{user.email}</h6>

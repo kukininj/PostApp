@@ -1,71 +1,32 @@
 import * as React from "react";
 import { ChangeEvent, FormEvent, FormEventHandler, useState } from "react";
 import { Button, Col, Container, Form, Image, InputGroup, Row } from "react-bootstrap";
-
-interface RegisterFormData {
-    email?: string;
-    password?: string;
-    firstname?: string;
-    surname?: string;
-}
+import { Users } from "../Api";
+import { RegisterForm } from "PostAppAPI";
 
 export const Register: React.FC<{}> = () => {
-    const [picture, setPicture] = useState<File>();
 
     const handlePictureChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            setPicture(e.target.files[0]);
+            console.log(e.target.files[0].name);
         }
     };
 
-    const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+    const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
         let formData = new FormData(event.currentTarget);
-        let credentials: RegisterFormData = {
-            email: formData.get("email")?.toString(),
-            password: formData.get("password")?.toString(),
-            firstname: formData.get("firstname")?.toString(),
-            surname: formData.get("surname")?.toString()
+        let credentials: RegisterForm = {
+            email: formData.get("email")?.toString() || "",
+            password: formData.get("password")?.toString() || "",
+            firstname: formData.get("firstname")?.toString() || "",
+            surname: formData.get("surname")?.toString() || ""
         }
-        console.log(credentials);
 
-        fetch("/register", {
-            method: "POST",
-            body: JSON.stringify(credentials),
-            headers: {
-                'content-type': 'application/json',
-                'Accept': 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((json) => {
-                // TODO: its just for tesing purposes,
-                // setting profile picture will require
-                // being logged in
-                if (json.status != "success") {
-                    console.error("invalid response", json);
-                    return;
-                }
-                if (!picture) {
-                    console.log("not sending picture");
-                    return;
-                }
-                console.log(picture);
-                let data = new FormData();
-
-                data.append("picture", picture, picture.name);
-
-                return fetch("/user/setProfilePicture", {
-                    method: "POST",
-                    body: data,
-                    headers: {
-                        'Accept': 'application/json',
-                    }
-                });
+        Users.register({registerForm: credentials})
+            .then(({user, error}) => {
+                let pic = user?.picture?.filePath;
+                
             })
-            .then((res) => res?.json())
-            .then(console.log)
-            .catch((err) => console.error(err));
     }
     return (
         <main className="container-lg">

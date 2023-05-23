@@ -9,7 +9,7 @@ const Login: React.FC<{}> = () => {
                 <Form className="col-md-auto bg-light rounded-5 p-5" action="/login" method="POST">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Adres e-mail</Form.Label>
-                        <Form.Control name="e-mail" type="email" placeholder="test@example.com" />
+                        <Form.Control name="email" type="email" placeholder="test@example.com" />
                         <Form.Text className="text-muted">
                             Nigdy nikomu nie przekażemy Twojego adresu e-mail. Obiecujemy ( ͡° ͜ʖ ͡°)
                         </Form.Text>

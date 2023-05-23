@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom'
-import { Post, User } from '../types'
 import { EmptyPost } from '../types/post';
 import { SimpleUser } from '../types/user';
 
@@ -38,10 +37,10 @@ const PostPage: React.FC<{}> = () => {
                 </div>
                 <div className="col-auto mx-auto">
                     <div className="rounded-5 p-5 w-100 h-auto bg-light shadow">
-                        <img className="img-thumbnail rounded" width="100px" height="100px" src={author.picture.href} alt="profilowe" />
+                        <img className="img-thumbnail rounded" width="100px" height="100px" src={author.picture?.filePath} alt="profilowe" />
                         <div className="p-1">
                             <h2 className="p-1">{author.name + " " + author.surname}</h2>
-                            <h6 className="p-1">Dołączył: {author.joinDate.toDateString()}</h6>
+                            <h6 className="p-1">Dołączył: {author.joined?.toDateString()}</h6>
                         </div>
                         <button type="button" className="btn btn-info">Wyślij wiadomość</button>
                     </div>
