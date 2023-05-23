@@ -1,6 +1,7 @@
 package com.kukininj.PostApp.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 
@@ -23,6 +24,9 @@ public class User {
     @Column(unique = true)
     public String email;
     public LocalDateTime joined;
+
+    @OneToOne
+    public Picture picture;
 
     @JsonIgnore
     @OneToMany
