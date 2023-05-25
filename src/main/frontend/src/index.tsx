@@ -12,6 +12,7 @@ import { Register } from "./pages/register";
 import { Users } from "./Api";
 import { Logout } from "./pages/logout";
 import { NewPostPage } from "./pages/newpost-page";
+import { Search } from "./pages/search";
 
 function App() {
     const [state, dispatch] = React.useReducer(
@@ -36,6 +37,7 @@ function App() {
                     <Route path='/' Component={Home} />
                     <Route path='/login' Component={Login} />
                     <Route path='/register' Component={Register} />
+                    <Route path='/search' Component={Search} />
                     <Route path='/post/:postID' Component={PostPage} />
                     <Route path='/account' Component={AccountPage} />
                     <Route path='/logout' Component={Logout} />
