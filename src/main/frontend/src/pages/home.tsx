@@ -15,7 +15,7 @@ const FeaturedCategories: React.FC<{}> = () => {
     ];
     let categoriesComponents = categories.map((category) => {
         return (
-            <Link to={`/search/${category.name}`}
+            <Link to={`/search?category=${category.name}`}
                 className="d-flex justify-content-center flex-column p-2 text-center link-dark text-decoration-none"
                 key={category.name} >
 

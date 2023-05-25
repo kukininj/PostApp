@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { IconLink } from './icons';
+import { AppContext } from '../Api/app-context';
 
 enum UserRole {
     Anonymous,
@@ -13,15 +14,16 @@ const UserIcon: React.FC<{ role: UserRole }> = ({ role }) => {
         case UserRole.Anonymous:
             return (<IconLink to='/login' icon='bi-box-arrow-in-right' />);
         case UserRole.User:
-            return (<Link className="h-auto" to="/profile"> <i className="bi bi-person"></i> </Link>);
+            return (<Link className="h-auto" to="/account"> <i className="bi bi-person"></i> </Link>);
         case UserRole.Admin:
-            return (<Link className="h-auto" to="/profile"> <i className="bi bi-person"></i> </Link>);
+            return (<Link className="h-auto" to="/account"> <i className="bi bi-person"></i> </Link>);
     }
 }
 
 const PortableMenu: React.FC<{ className: string, style: React.CSSProperties }> = ({ className, style }) => {
-    const [role, setRole] = React.useState(UserRole.Anonymous);
-
+    const app = React.useContext(AppContext);
+    const role = app.authenticated()? UserRole.User : UserRole.Anonymous;
+    
     return (
         <div className={className} style={style}>
             <UserIcon role={role} />
@@ -37,14 +39,14 @@ const Navbar: React.FC<{}> = () => {
                 <Link className="d-inline order-0 logo navbar-brand" to="/">
                     <img src="/images/logo-sm.svg"/>
                 </Link>
-                <form className="inline-flex my-auto order-md-1 order-last hstack gap-3 rounded-pill bg-light p-2 shadow" style={{ height: "75px" }}>
+                <form action="/search" className="inline-flex my-auto order-md-1 order-last hstack gap-3 rounded-pill bg-light p-2 shadow" style={{ height: "75px" }}>
                     <div className="search-input p-1">
-                        <input className="form-control fs-3 bg-transparent border-0 shadow-none" type="text" name="search-querry-input" placeholder="Masz coś na myśli?" />
+                        <input className="form-control fs-3 bg-transparent border-0 shadow-none" type="text" name="search-querry" placeholder="Masz coś na myśli?" />
                     </div>
                     <div className="vr" ></div>
                     <div className="class-select hstack p-1">
                         <div className="m-1"><i className="bi bi-geo-alt-fill"></i></div>
-                        <input className="form-control fs-3 bg-transparent border-0 shadow-none" type="text" name="area-input" placeholder="Kraków"/>
+                        <input className="form-control fs-3 bg-transparent border-0 shadow-none" type="text" name="area" placeholder="Kraków"/>
                     </div>
                     <button className="submit-search btn btn-info rounded-circle flex-shrink-0" style={{ height: "100%", aspectRatio: "1/1" }}>
                         <i className="bi bi-search"></i>

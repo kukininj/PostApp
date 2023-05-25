@@ -28,7 +28,7 @@ export const PostsList: React.FC<{
         )
     });
     return (
-        <div className="d-grid m-5 gap-3">
+        <div className="d-grid m-3 m-sm-5 gap-3">
             {postComponents}
         </div>
     );

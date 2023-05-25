@@ -7,15 +7,27 @@ import { createRoot } from "react-dom/client"
 import Navbar from "./pages/navbar";
 import PostPage from "./pages/post-page";
 import AccountPage from "./pages/account";
-import { AppContext, State } from "./Api/app-context";
+import { AppContext, SetUser, State } from "./Api/app-context";
 import ErrorPage from "./pages/error";
-import { Communication } from "./Api/communication";
 import { Register } from "./pages/register";
+import { Users } from "./Api";
+import { SimpleUser } from "./types/user";
 
 function App() {
     const [state, dispatch] = React.useReducer(
         State.reducer, new State()
     );
+
+    React.useEffect(() => {
+        dispatch(new SetUser(SimpleUser));
+    }, [])
+
+    React.useEffect(() => {
+        Users.getUserInfo()
+            .then((user) => {
+                dispatch(new SetUser(user));
+            })
+    }, [])
 
     return (
         <AppContext.Provider value={state}>
@@ -39,7 +51,7 @@ if (rootElement === null) throw new Error('Failed to find root element')
 
 const root = createRoot(rootElement);
 
-window.API = Communication.open();
+// window.API = Communication.open();
 
 root.render(
     <App />
