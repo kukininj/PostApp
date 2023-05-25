@@ -9,4 +9,8 @@ import java.util.Optional;
 @SessionScope
 public class Session {
     public Optional<Long> userID;
+
+    public Session() {
+        userID = Optional.empty();
+    }
 }
