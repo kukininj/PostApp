@@ -10,19 +10,24 @@ import jakarta.validation.constraints.Digits;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    public Long id;
 
+    @ManyToOne
+    public User creator;
     @OneToOne
-    User creator;
+    public Picture picture;
 
-    LocalDateTime added;
-    LocalDateTime edited;
+    @ManyToOne
+    public PostCategory category;
 
-    String title;
-    String description;
+    public LocalDateTime added;
+    public LocalDateTime edited;
+
+    public String title;
+    public String description;
 
     @Digits(integer = 5, fraction = 2)
-    BigDecimal price;
+    public BigDecimal price;
 
-    String area;
+    public String area;
 }
