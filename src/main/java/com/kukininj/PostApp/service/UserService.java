@@ -2,19 +2,15 @@ package com.kukininj.PostApp.service;
 
 import com.kukininj.PostApp.models.User;
 import com.kukininj.PostApp.repository.UserRepository;
-import com.kukininj.PostApp.security.PostAppAuthenticationProvider;
-import com.kukininj.PostApp.security.Session;
+import com.kukininj.PostApp.security.SessionData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -23,7 +19,7 @@ public class UserService {
     UserRepository userRepository;
 
     @Autowired
-    Session session;
+    SessionData sessionData;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -58,7 +54,7 @@ public class UserService {
 
             Optional<User> user = userRepository.findByEmail(email);
 
-            session.userID = Optional.ofNullable(user.get().id);
+            sessionData.setUser(user.get().id);
 
             return user;
         } catch (Exception e) {
@@ -73,10 +69,12 @@ public class UserService {
     }
 
     public Optional<User> getActiveUser() {
-        if (session.userID.isEmpty())
+        if (!sessionData.loggedIn()) {
             return Optional.empty();
+        }
+        System.out.println("getting user by id");
         return userRepository.findById(
-                session.userID.get()
+                sessionData.getUserID()
         );
     }
 }

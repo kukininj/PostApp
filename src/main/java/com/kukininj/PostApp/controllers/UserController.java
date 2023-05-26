@@ -4,7 +4,7 @@ import com.kukininj.PostApp.models.User;
 import com.kukininj.PostApp.models.requestmodels.RegisterForm;
 import com.kukininj.PostApp.models.responsemodels.RegisterResponse;
 import com.kukininj.PostApp.models.responsemodels.SetProfilePictureResponse;
-import com.kukininj.PostApp.security.Session;
+import com.kukininj.PostApp.security.SessionData;
 import com.kukininj.PostApp.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpRequest;
