@@ -11,6 +11,7 @@ import { AppContext, SetUser, State } from "./Api/app-context";
 import ErrorPage from "./pages/error";
 import { Register } from "./pages/register";
 import { Users } from "./Api";
+import { Logout } from "./pages/logout";
 
 function App() {
     const [state, dispatch] = React.useReducer(
@@ -37,6 +38,7 @@ function App() {
                     <Route path='/register' Component={Register} />
                     <Route path='/post/:postID' Component={PostPage} />
                     <Route path='/account' Component={AccountPage} />
+                    <Route path='/logout' Component={Logout} />
                     <Route path='*' Component={ErrorPage} />
                 </Routes>
             </BrowserRouter>

@@ -14,7 +14,7 @@ const UserIcon: React.FC<{ role: UserRole }> = ({ role }) => {
         case UserRole.Anonymous:
             return (<IconLink to='/login' icon='bi-box-arrow-in-right' />);
         case UserRole.User:
-            return (<Link className="h-auto" to="/account"> <i className="bi bi-person"></i> </Link>);
+            return (<IconLink to="/account" icon="bi-person" />);
         case UserRole.Admin:
             return (<Link className="h-auto" to="/account"> <i className="bi bi-person"></i> </Link>);
     }
@@ -22,12 +22,16 @@ const UserIcon: React.FC<{ role: UserRole }> = ({ role }) => {
 
 const PortableMenu: React.FC<{ className: string, style: React.CSSProperties }> = ({ className, style }) => {
     const app = React.useContext(AppContext);
-    const role = app.authenticated()? UserRole.User : UserRole.Anonymous;
-    
+    const role = app.authenticated() ? UserRole.User : UserRole.Anonymous;
+
     return (
         <div className={className} style={style}>
             <UserIcon role={role} />
             {role != UserRole.Anonymous && <i className="bi bi-bell"></i>}
+            {
+                role != UserRole.Anonymous &&
+                <IconLink to='/logout' icon='bi-box-arrow-right' />
+            }
         </div>
     );
 }
@@ -37,7 +41,7 @@ const Navbar: React.FC<{}> = () => {
         <div className="navbar navbar-expand-lg navbar-fixed-top justify-content-center text-dark">
             <div className="d-flex flex-md-nowrap flex-wrap justify-content-between gap-3 px-3">
                 <Link className="d-inline order-0 logo navbar-brand" to="/">
-                    <img src="/images/logo-sm.svg"/>
+                    <img src="/images/logo-sm.svg" />
                 </Link>
                 <form action="/search" className="inline-flex my-auto order-md-1 order-last hstack gap-3 rounded-pill bg-light p-2 shadow" style={{ height: "75px" }}>
                     <div className="search-input p-1">
@@ -46,7 +50,7 @@ const Navbar: React.FC<{}> = () => {
                     <div className="vr" ></div>
                     <div className="class-select hstack p-1">
                         <div className="m-1"><i className="bi bi-geo-alt-fill"></i></div>
-                        <input className="form-control fs-3 bg-transparent border-0 shadow-none" type="text" name="area" placeholder="Kraków"/>
+                        <input className="form-control fs-3 bg-transparent border-0 shadow-none" type="text" name="area" placeholder="Kraków" />
                     </div>
                     <button className="submit-search btn btn-info rounded-circle flex-shrink-0" style={{ height: "100%", aspectRatio: "1/1" }}>
                         <i className="bi bi-search"></i>
