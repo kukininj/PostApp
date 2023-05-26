@@ -8,27 +8,10 @@ import { Users } from '../Api';
 
 const AccountPage: React.FC<{}> = () => {
     const state = React.useContext(AppContext);
-    const [user, setUser] = React.useState(SimpleUser);
     const [pending, setPending] = React.useState([SimpleAwaitingClientResponse, SimpleNotViewed, SimpleNotViewed, SimpleNotViewed, SimpleNotViewed, SimpleNotViewed]);
     const [finished, setFinished] = React.useState([SimpleRejected, SimpleFinishedSuccessfully]);
 
-    const getApiData = async () => {
-        const user = await Users.getUserInfo();
-
-        setUser(user);
-    }
-
-    React.useEffect(() => {
-        Users.getUserInfo()
-            .then(user => {
-                console.log(user);
-                if (!user.picture) {
-                    user.picture = {};
-                    user.picture.filePath = "/images/posts/question-square-fill.svg";
-                }
-                setUser(user);
-            });
-    }, []);
+    const user = state.user || SimpleUser;
 
     return (
         <main className="container-lg">

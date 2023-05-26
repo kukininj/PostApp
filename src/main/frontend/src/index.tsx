@@ -11,7 +11,6 @@ import { AppContext, SetUser, State } from "./Api/app-context";
 import ErrorPage from "./pages/error";
 import { Register } from "./pages/register";
 import { Users } from "./Api";
-import { SimpleUser } from "./types/user";
 
 function App() {
     const [state, dispatch] = React.useReducer(
@@ -19,13 +18,12 @@ function App() {
     );
 
     React.useEffect(() => {
-        dispatch(new SetUser(SimpleUser));
-    }, [])
-
-    React.useEffect(() => {
         Users.getUserInfo()
             .then((user) => {
                 dispatch(new SetUser(user));
+            })
+            .catch((r) => {
+                console.log(r);
             })
     }, [])
 
