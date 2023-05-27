@@ -7,7 +7,10 @@ src/apis/PostControllerApi.ts
 src/apis/UserControllerApi.ts
 src/apis/index.ts
 src/index.ts
+src/models/AddPostRequest.ts
 src/models/Picture.ts
+src/models/Post.ts
+src/models/PostCategory.ts
 src/models/RegisterForm.ts
 src/models/RegisterResponse.ts
 src/models/SetProfilePictureResponse.ts
