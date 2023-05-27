@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Login from "./pages/login";
 import Home from "./pages/home";
@@ -12,6 +11,7 @@ import ErrorPage from "./pages/error";
 import { Register } from "./pages/register";
 import { Users } from "./Api";
 import { Logout } from "./pages/logout";
+import { NewPostPage } from "./pages/newpost-page";
 
 function App() {
     const [state, dispatch] = React.useReducer(
@@ -39,6 +39,7 @@ function App() {
                     <Route path='/post/:postID' Component={PostPage} />
                     <Route path='/account' Component={AccountPage} />
                     <Route path='/logout' Component={Logout} />
+                    <Route path='/newpost' Component={NewPostPage} />
                     <Route path='*' Component={ErrorPage} />
                 </Routes>
             </BrowserRouter>
