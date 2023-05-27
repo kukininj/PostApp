@@ -32,16 +32,19 @@ const PostPage: React.FC<{}> = () => {
                         <br />
                         <div className="container-fluid">
                             <h1>{post.title}</h1>
-                            <h2><b>{post.price}</b></h2>
+                            <h2 className="text-end">
+                                {post.price} zł
+                            </h2>
                             <hr />
                             <div>
-                                <h3>Opis</h3>
+                                <h3>Opis:</h3>
                                 <div>
                                     {post.description}
                                 </div>
                             </div>
                             <hr />
                             <div className="row">
+                                <p className="col-sm-auto">Kategoria: {post.category?.name}</p>
                                 <p className="col-sm-auto">ID: {post.id}</p>
                                 <p className="col-sm-auto">Ostatnia aktualizacja: {post.edited?.toLocaleString()}</p>
                                 <p className="col-sm-auto">{post.area}</p>
