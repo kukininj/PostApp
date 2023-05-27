@@ -1,11 +1,15 @@
+import { Post, PostCategory } from 'PostAppAPI';
+import { SimpleUser } from './user';
+
 export const EmptyPost: Post = {
-    id: "0",
+    id: 0,
     title: "Tytuł ogłoszenia",
-    about: "opis",
-    price: "2137 zł",
-    picture: new URL("/images/posts/question-square-fill.svg", document.location.href),
+    description: "opis",
+    price: 2137,
     area: "Kraków",
-    date: "02.02.2020",
+    creator: SimpleUser,
+    category: { name: "Motoryzacja" },
+    picture: { filePath: "/images/posts/question-square-fill.svg" },
 };
 
 export class PostID {
@@ -19,13 +23,3 @@ export class PostID {
         return EmptyPost;
     }
 }
-
-export interface Post {
-    id: string;
-    title: string;
-    about: string;
-    price: string;
-    picture?: URL;
-    area: string;
-    date: string;
-};

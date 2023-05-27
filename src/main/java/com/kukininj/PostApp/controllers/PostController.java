@@ -1,34 +1,56 @@
 package com.kukininj.PostApp.controllers;
 
+import com.kukininj.PostApp.models.Picture;
 import com.kukininj.PostApp.models.Post;
+import com.kukininj.PostApp.models.requestmodels.AddPostRequest;
+import com.kukininj.PostApp.repository.PostRepository;
+import com.kukininj.PostApp.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.session.Session;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@RestController("/post")
+@RestController
 public class PostController {
+    @Autowired
+    PostService service;
+
     @GetMapping(
-            value = "/get/{post_id}",
-            consumes = MediaType.APPLICATION_JSON_VALUE
+            value = "/post/get/{post_id}",
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Post> getPost(@PathVariable long post_id) {
-        // TODO
-        return ResponseEntity.ok(null);
+    public ResponseEntity<Optional<Post>> getPost(@PathVariable long post_id) {
+        return ResponseEntity.ok(service.getPost(post_id));
     }
 
-    @PutMapping(
-            value = "/create/{post_id}",
-            consumes = MediaType.APPLICATION_JSON_VALUE
+    @PostMapping(
+            value = "/post/create",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Post> addPost(@PathVariable long post_id) {
-        // TODO
-        return ResponseEntity.ok(null);
+    public ResponseEntity<Optional<Post>> addPost(
+            @RequestBody
+            AddPostRequest request
+    ) {
+        BigDecimal price = new BigDecimal(request.price_str);
+
+        return ResponseEntity.ok(
+                service.addPost(
+                        request.title,
+                        request.description,
+                        price,
+                        request.area,
+                        request.category,
+                         // TODO: change to request.picture_id when Picture functionality is finished
+                        1L
+                )
+        );
     }
 }

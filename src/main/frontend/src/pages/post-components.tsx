@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Post } from "../types";
 import { Link } from "react-router-dom";
 import { EmptyPost } from "../types/post";
+import { Post } from "PostAppAPI";
 
 export const PostsList: React.FC<{
     posts: Post[]
@@ -10,7 +10,7 @@ export const PostsList: React.FC<{
         return (
             <div className="post-element row bg-light rounded-5 shadow" key={post.id}>
                 <Link to={`/post/${post.id}`} className="col-lg flex-shrink-0 felx-grow-1 bg-primary rounded-5 p-3 shadow" style={{aspectRatio:"3"}}>
-                    <img className="d-block h-100 mx-auto" src={post.picture?.href || ""} alt="obrazek" />
+                    <img className="d-block h-100 mx-auto" src={post.picture?.filePath || ""} alt="obrazek" />
                 </Link>
                 <div className="col-lg-10">
                     <div className="d-flex p-2 justify-content-between">
@@ -21,7 +21,7 @@ export const PostsList: React.FC<{
                     </div>
                     <div className="row">
                         <p>{post.area}</p>
-                        <p>{post.date}</p>
+                        <p>{post.edited?.toLocaleString()}</p>
                     </div>
                 </div>
             </div>

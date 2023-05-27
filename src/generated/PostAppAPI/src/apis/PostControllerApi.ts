@@ -14,9 +14,19 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  AddPostRequest,
+  Post,
+} from '../models';
+import {
+    AddPostRequestFromJSON,
+    AddPostRequestToJSON,
+    PostFromJSON,
+    PostToJSON,
+} from '../models';
 
-export interface AddPostRequest {
-    postId: number;
+export interface AddPostOperationRequest {
+    addPostRequest: AddPostRequest;
 }
 
 export interface GetPostRequest {
@@ -30,35 +40,38 @@ export class PostControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async addPostRaw(requestParameters: AddPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters.postId === null || requestParameters.postId === undefined) {
-            throw new runtime.RequiredError('postId','Required parameter requestParameters.postId was null or undefined when calling addPost.');
+    async addPostRaw(requestParameters: AddPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Post>> {
+        if (requestParameters.addPostRequest === null || requestParameters.addPostRequest === undefined) {
+            throw new runtime.RequiredError('addPostRequest','Required parameter requestParameters.addPostRequest was null or undefined when calling addPost.');
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        headerParameters['Content-Type'] = 'application/json';
+
         const response = await this.request({
-            path: `/create/{post_id}`.replace(`{${"post_id"}}`, encodeURIComponent(String(requestParameters.postId))),
-            method: 'PUT',
+            path: `/post/create`,
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
+            body: AddPostRequestToJSON(requestParameters.addPostRequest),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => PostFromJSON(jsonValue));
     }
 
     /**
      */
-    async addPost(requestParameters: AddPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+    async addPost(requestParameters: AddPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Post> {
         const response = await this.addPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async getPostRaw(requestParameters: GetPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async getPostRaw(requestParameters: GetPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Post>> {
         if (requestParameters.postId === null || requestParameters.postId === undefined) {
             throw new runtime.RequiredError('postId','Required parameter requestParameters.postId was null or undefined when calling getPost.');
         }
@@ -68,18 +81,18 @@ export class PostControllerApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/get/{post_id}`.replace(`{${"post_id"}}`, encodeURIComponent(String(requestParameters.postId))),
+            path: `/post/get/{post_id}`.replace(`{${"post_id"}}`, encodeURIComponent(String(requestParameters.postId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => PostFromJSON(jsonValue));
     }
 
     /**
      */
-    async getPost(requestParameters: GetPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+    async getPost(requestParameters: GetPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Post> {
         const response = await this.getPostRaw(requestParameters, initOverrides);
         return await response.value();
     }

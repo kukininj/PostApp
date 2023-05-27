@@ -12,7 +12,7 @@ public class PageController {
             "/login",
             "/account",
             "/search/**",
-            "/post/**",
+            "/post/{post_id}",
             "/error",
     }, produces = MediaType.TEXT_HTML_VALUE)
     public String getSinglePage() {
