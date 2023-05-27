@@ -1,39 +1,27 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { IconLink } from './icons';
+import { IconButton, IconLink } from './icons';
 import { AppContext } from '../Api/app-context';
-
-enum UserRole {
-    Anonymous,
-    User,
-    Admin
-};
-
-const UserIcon: React.FC<{ role: UserRole }> = ({ role }) => {
-    switch (role) {
-        case UserRole.Anonymous:
-            return (<IconLink to='/login' icon='bi-box-arrow-in-right' />);
-        case UserRole.User:
-            return (<IconLink to="/account" icon="bi-person" />);
-        case UserRole.Admin:
-            return (<Link className="h-auto" to="/account"> <i className="bi bi-person"></i> </Link>);
-    }
-}
 
 const PortableMenu: React.FC<{ className: string, style: React.CSSProperties }> = ({ className, style }) => {
     const app = React.useContext(AppContext);
-    const role = app.authenticated() ? UserRole.User : UserRole.Anonymous;
 
-    return (
-        <div className={className} style={style}>
-            <UserIcon role={role} />
-            {role != UserRole.Anonymous && <i className="bi bi-bell"></i>}
-            {
-                role != UserRole.Anonymous &&
+    if (app.authenticated()) {
+        return (
+            <div className={className} style={style}>
+                <IconLink to="/account" icon="bi-person" />
+                <IconLink to="/newpost" icon="bi-plus-circle" />
                 <IconLink to='/logout' icon='bi-box-arrow-right' />
-            }
-        </div>
-    );
+            </div>
+        );
+    } else {
+        return (
+            <div className={className} style={style}>
+                <IconLink to='/login' icon='bi-box-arrow-in-right' />
+            </div>
+        );
+    }
+
 }
 
 const Navbar: React.FC<{}> = () => {
@@ -56,7 +44,7 @@ const Navbar: React.FC<{}> = () => {
                         <i className="bi bi-search"></i>
                     </button>
                 </form>
-                <PortableMenu className="hstack my-auto gap-3 order-2 portable-menu rounded-pill bg-light p-3 shadow" style={{ height: "75px" }} />
+                <PortableMenu className="hstack my-auto gap-2 order-2 portable-menu rounded-pill bg-light p-3 shadow" style={{ height: "75px" }} />
             </div>
         </div>
     );
