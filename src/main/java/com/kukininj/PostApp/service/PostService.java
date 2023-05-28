@@ -101,6 +101,8 @@ public class PostService {
         var category = categoryRepository.findByName(categoryName);
         if (category.isPresent()) {
             filters.add((root, query, cb) -> cb.equal(root.get("category"), category.get()));
+        } else if (categoryName != null && categoryName.length() > 0) { // if category name is "", then wildcard
+            return new ArrayList<>();
         }
 
         if (area != null) {
@@ -109,7 +111,7 @@ public class PostService {
 
         if (maxPrice != null && minPrice != null) {
             filters.add((root, query, cb) -> cb.between(root.get("price"), minPrice, maxPrice));
-        } else if (maxPrice != null) {
+        } else if (maxPrice != null && maxPrice.compareTo(BigDecimal.ZERO) > 0) { // disgusting
             filters.add((root, query, cb) -> cb.lessThan(root.get("price"), maxPrice));
         } else if (minPrice != null) {
             filters.add((root, query, cb) -> cb.greaterThan(root.get("price"), minPrice));
