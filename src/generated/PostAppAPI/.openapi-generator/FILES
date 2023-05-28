@@ -8,6 +8,7 @@ src/apis/UserControllerApi.ts
 src/apis/index.ts
 src/index.ts
 src/models/AddPostRequest.ts
+src/models/FilteredFindRequest.ts
 src/models/Picture.ts
 src/models/Post.ts
 src/models/PostCategory.ts

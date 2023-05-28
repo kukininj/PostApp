@@ -16,17 +16,24 @@
 import * as runtime from '../runtime';
 import type {
   AddPostRequest,
+  FilteredFindRequest,
   Post,
 } from '../models';
 import {
     AddPostRequestFromJSON,
     AddPostRequestToJSON,
+    FilteredFindRequestFromJSON,
+    FilteredFindRequestToJSON,
     PostFromJSON,
     PostToJSON,
 } from '../models';
 
 export interface AddPostOperationRequest {
     addPostRequest: AddPostRequest;
+}
+
+export interface GetByFilterRequest {
+    filteredFindRequest: FilteredFindRequest;
 }
 
 export interface GetPostRequest {
@@ -66,6 +73,61 @@ export class PostControllerApi extends runtime.BaseAPI {
      */
     async addPost(requestParameters: AddPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Post> {
         const response = await this.addPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getByFilterRaw(requestParameters: GetByFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Post>>> {
+        if (requestParameters.filteredFindRequest === null || requestParameters.filteredFindRequest === undefined) {
+            throw new runtime.RequiredError('filteredFindRequest','Required parameter requestParameters.filteredFindRequest was null or undefined when calling getByFilter.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/post/filter`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: FilteredFindRequestToJSON(requestParameters.filteredFindRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(PostFromJSON));
+    }
+
+    /**
+     */
+    async getByFilter(requestParameters: GetByFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Post>> {
+        const response = await this.getByFilterRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getLatestRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Post>>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/post/latest`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(PostFromJSON));
+    }
+
+    /**
+     */
+    async getLatest(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Post>> {
+        const response = await this.getLatestRaw(initOverrides);
         return await response.value();
     }
 

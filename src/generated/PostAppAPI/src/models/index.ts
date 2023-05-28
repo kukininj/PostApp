@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './AddPostRequest';
+export * from './FilteredFindRequest';
 export * from './Picture';
 export * from './Post';
 export * from './PostCategory';
