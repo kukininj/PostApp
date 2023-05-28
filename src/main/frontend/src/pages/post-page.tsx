@@ -15,6 +15,9 @@ const PostPage: React.FC<{}> = () => {
             .then((post) => {
                 console.log(post);
                 setPost(post);
+
+                if (post.creator)
+                    setAuthor(post.creator);
             })
             .catch((err) => {
                 console.log("err", err)

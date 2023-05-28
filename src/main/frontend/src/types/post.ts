@@ -2,7 +2,9 @@ import { Post, PostCategory } from 'PostAppAPI';
 import { SimpleUser } from './user';
 
 export const EmptyPost: Post = {
-    id: 0,
+    get id() {
+        return Math.random();
+    },
     title: "Tytuł ogłoszenia",
     description: "opis",
     price: 2137,

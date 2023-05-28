@@ -40,7 +40,7 @@ const Home: React.FC<{}> = () => {
     const state = React.useContext(AppContext);
 
     return (
-        <main className="gap-sm-3 d-sm-grid container">
+        <main className="gap-sm-3 d-sm-grid container-lg">
             <FeaturedCategories />
             <LatestPosts />
         </main>

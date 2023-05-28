@@ -71,6 +71,37 @@
         }
       }
     },
+    "/post/filter" : {
+      "post" : {
+        "tags" : [ "post-controller" ],
+        "operationId" : "getByFilter",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FilteredFindRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Post"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/post/create" : {
       "post" : {
         "tags" : [ "post-controller" ],
@@ -156,6 +187,27 @@
                   "type" : "array",
                   "items" : {
                     "$ref" : "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/post/latest" : {
+      "get" : {
+        "tags" : [ "post-controller" ],
+        "operationId" : "getLatest",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Post"
                   }
                 }
               }
@@ -329,27 +381,23 @@
           }
         }
       },
-      "AddPostRequest" : {
+      "FilteredFindRequest" : {
         "type" : "object",
         "properties" : {
-          "title" : {
-            "type" : "string"
-          },
-          "description" : {
-            "type" : "string"
-          },
-          "price_str" : {
-            "type" : "string"
-          },
-          "area" : {
+          "query" : {
             "type" : "string"
           },
           "category" : {
             "type" : "string"
           },
-          "picture_id" : {
-            "type" : "integer",
-            "format" : "int64"
+          "area" : {
+            "type" : "string"
+          },
+          "minPrice" : {
+            "type" : "number"
+          },
+          "maxPrice" : {
+            "type" : "number"
           }
         }
       },
@@ -396,6 +444,30 @@
         "properties" : {
           "name" : {
             "type" : "string"
+          }
+        }
+      },
+      "AddPostRequest" : {
+        "type" : "object",
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "price_str" : {
+            "type" : "string"
+          },
+          "area" : {
+            "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "picture_id" : {
+            "type" : "integer",
+            "format" : "int64"
           }
         }
       },
