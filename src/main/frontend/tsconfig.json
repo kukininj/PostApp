@@ -12,6 +12,10 @@
       {
         "name": "typescript-lit-html-plugin"
       }
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable"
     ]
   }
 }

@@ -6,12 +6,12 @@ import { LatestPosts } from './post-components'
 
 const FeaturedCategories: React.FC<{}> = () => {
     const categories = [
-        new Category("Motoryzacja", "moto", new URL("/images/categories/car-front-fill.svg", document.location.href)),
-        new Category("Elektronika", "elektronika", new URL("/images/categories/motherboard-fill.svg", document.location.href)),
-        new Category("Hobby", "hobby", new URL("/images/categories/book-half.svg", document.location.href)),
-        new Category("Kolarstwo", "kolarstwo", new URL("/images/categories/bicycle.svg", document.location.href)),
-        new Category("Biżuteria", "bizuteria", new URL("/images/categories/gem.svg", document.location.href)),
-        new Category("Narzędzia", "tarzedzia", new URL("/images/categories/hammer.svg", document.location.href)),
+        new Category("Motoryzacja", new URL("/images/categories/car-front-fill.svg", document.location.href)),
+        new Category("Elektronika", new URL("/images/categories/motherboard-fill.svg", document.location.href)),
+        new Category("Hobby", new URL("/images/categories/book-half.svg", document.location.href)),
+        new Category("Kolarstwo", new URL("/images/categories/bicycle.svg", document.location.href)),
+        new Category("Biżuteria", new URL("/images/categories/gem.svg", document.location.href)),
+        new Category("Narzędzia", new URL("/images/categories/hammer.svg", document.location.href)),
     ];
     let categoriesComponents = categories.map((category) => {
         return (
@@ -25,7 +25,7 @@ const FeaturedCategories: React.FC<{}> = () => {
                     <img className="text-center img-responsive w-100 h-100" src={category.url.href} alt="obrazek" />
 
                 </div>
-                {category.title}
+                {category.name}
             </Link>
         )
     })
