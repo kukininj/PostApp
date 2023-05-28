@@ -2,6 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { EmptyPost } from "../types/post";
 import { Post } from "PostAppAPI";
+import { Posts } from "../Api";
 
 export const PostsList: React.FC<{
     posts: Post[]
@@ -9,10 +10,11 @@ export const PostsList: React.FC<{
     let postComponents = posts.map((post) => {
         return (
             <div className="post-element row bg-light rounded-5 shadow" key={post.id}>
-                <Link to={`/post/${post.id}`} className="col-lg flex-shrink-0 felx-grow-1 bg-primary rounded-5 p-3 shadow" style={{aspectRatio:"3"}}>
+                <Link to={`/post/${post.id}`} className="col-sm-auto flex-shrink-0 felx-grow-1 bg-primary rounded-5 p-3 shadow" 
+                    style={{aspectRatio:"3", minWidth: "150px"}}>
                     <img className="d-block h-100 mx-auto" src={post.picture?.filePath || ""} alt="obrazek" />
                 </Link>
-                <div className="col-lg-10">
+                <div className="col-sm">
                     <div className="d-flex p-2 justify-content-between">
                         <Link className="text-decoration-none link-dark" to={`/post/${post.id}`}>
                             <h2 className="col">{post.title}</h2>
@@ -36,6 +38,11 @@ export const PostsList: React.FC<{
 
 export const LatestPosts: React.FC<{}> = () => {
     const [posts, setPosts] = React.useState([EmptyPost, EmptyPost]);
+
+    React.useEffect(() => {
+        Posts.getLatest()
+            .then(setPosts)
+    }, [])
 
     return (
         <PostsList posts={posts} />
