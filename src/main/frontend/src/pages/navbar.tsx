@@ -33,7 +33,7 @@ const Navbar: React.FC<{}> = () => {
                 </Link>
                 <form action="/search" className="inline-flex my-auto order-md-1 order-last hstack gap-3 rounded-pill bg-light p-2 shadow" style={{ height: "75px" }}>
                     <div className="search-input p-1">
-                        <input className="form-control fs-3 bg-transparent border-0 shadow-none" type="text" name="search-querry" placeholder="Masz coś na myśli?" />
+                        <input className="form-control fs-3 bg-transparent border-0 shadow-none" type="text" name="query" placeholder="Masz coś na myśli?" />
                     </div>
                     <div className="vr" ></div>
                     <div className="class-select hstack p-1">
