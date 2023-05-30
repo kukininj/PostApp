@@ -6,11 +6,13 @@ import java.util.UUID;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 public class PostCategory {
     @Id
-    @GeneratedValue(generator = "UUID")
+    @GeneratedValue
+    @UuidGenerator
     public UUID id;
 
     @Column(unique = true)

@@ -6,16 +6,18 @@ import java.util.UUID;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 public class Post {
     @Id
-    @GeneratedValue(generator = "UUID")
+    @GeneratedValue
+    @UuidGenerator
     public UUID id;
 
     @ManyToOne
     public User creator;
-    @OneToOne
+    @ManyToOne
     public Picture picture;
 
     @ManyToOne

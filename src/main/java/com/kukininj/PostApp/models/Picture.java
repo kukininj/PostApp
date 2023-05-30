@@ -1,6 +1,7 @@
 package com.kukininj.PostApp.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -8,7 +9,8 @@ import java.util.UUID;
 @Entity
 public class Picture {
     @Id
-    @GeneratedValue(generator = "UUID")
+    @GeneratedValue
+    @UuidGenerator
     public UUID id;
 
     @ManyToOne

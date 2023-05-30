@@ -15,7 +15,7 @@ public class Transaction {
         Rejected;
     }
     @Id
-    @GeneratedValue(generator = "UUID")
+    @GeneratedValue(strategy = GenerationType.UUID)
     public UUID id;
 
     @ManyToOne
