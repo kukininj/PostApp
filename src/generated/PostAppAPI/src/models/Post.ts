@@ -40,10 +40,10 @@ import {
 export interface Post {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Post
      */
-    id?: number;
+    id?: string;
     /**
      * 
      * @type {User}
