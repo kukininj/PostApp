@@ -3,12 +3,13 @@ package com.kukininj.PostApp.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 public class Picture {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    @GeneratedValue(generator = "UUID")
+    public UUID id;
 
     @ManyToOne
     User owner;
