@@ -1,5 +1,6 @@
 package com.kukininj.PostApp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -14,7 +15,8 @@ public class Picture {
     public UUID id;
 
     @ManyToOne
-    User owner;
+    @JsonIgnore
+    public User owner;
 
     public String title;
     public String filePath;
