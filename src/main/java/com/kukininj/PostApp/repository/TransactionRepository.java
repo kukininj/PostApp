@@ -10,5 +10,5 @@ import java.util.UUID;
 
 public interface TransactionRepository extends JpaRepository<Transaction, UUID> {
     @Query("FROM Transaction t WHERE t.id=?1 and ?2 in (t.client, t.merchant)")
-    Optional<Transaction> findByIdAndClientOrMerchant(UUID transaction, User client, User merchant);
+    Optional<Transaction> findByIdAndClientOrMerchant(UUID transaction, User client);
 }
