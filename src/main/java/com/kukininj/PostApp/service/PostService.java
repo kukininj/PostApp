@@ -49,7 +49,7 @@ public class PostService {
     ) {
         Optional<User> user = userService.getActiveUser();
         Optional<PostCategory> category = categoryRepository.findByName(categoryName);
-        Optional<Picture> picture = pictureRepository.findById(picture_id);
+        Optional<Picture> picture = pictureRepository.findTopByOrderById(); // TODO: use `picture_id`
 
         if (user.isEmpty() ||
                 category.isEmpty() ||
