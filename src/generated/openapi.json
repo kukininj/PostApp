@@ -43,6 +43,71 @@
         }
       }
     },
+    "/transaction/{transaction_id}/send_message" : {
+      "post" : {
+        "tags" : [ "transaction-controller" ],
+        "operationId" : "sendMessage",
+        "parameters" : [ {
+          "name" : "transaction_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transaction/new" : {
+      "post" : {
+        "tags" : [ "transaction-controller" ],
+        "operationId" : "newTransaction",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewTransactionRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NewTransactionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/register" : {
       "post" : {
         "tags" : [ "user-controller" ],
@@ -195,6 +260,63 @@
         }
       }
     },
+    "/transaction/{transaction_id}/messages" : {
+      "get" : {
+        "tags" : [ "transaction-controller" ],
+        "operationId" : "getMessages",
+        "parameters" : [ {
+          "name" : "transaction_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "text/event-stream" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Message"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transaction/{transaction_id}/info" : {
+      "get" : {
+        "tags" : [ "transaction-controller" ],
+        "operationId" : "getInfo",
+        "parameters" : [ {
+          "name" : "transaction_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Transaction"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/post/latest" : {
       "get" : {
         "tags" : [ "post-controller" ],
@@ -225,8 +347,8 @@
           "in" : "path",
           "required" : true,
           "schema" : {
-            "type" : "integer",
-            "format" : "int64"
+            "type" : "string",
+            "format" : "uuid"
           }
         } ],
         "responses" : {
@@ -236,57 +358,6 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/Post"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/get_messages/{chat_id}" : {
-      "get" : {
-        "tags" : [ "chat-controller" ],
-        "operationId" : "getMessages",
-        "parameters" : [ {
-          "name" : "chat_id",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/Message"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/get_conversations" : {
-      "get" : {
-        "tags" : [ "chat-controller" ],
-        "operationId" : "getConversations",
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/Conversation"
-                  }
                 }
               }
             }
@@ -309,19 +380,22 @@
           }
         }
       },
-      "RegisterForm" : {
+      "NewTransactionRequest" : {
         "type" : "object",
         "properties" : {
-          "email" : {
-            "type" : "string"
+          "postID" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }
+      },
+      "NewTransactionResponse" : {
+        "type" : "object",
+        "properties" : {
+          "transaction" : {
+            "$ref" : "#/components/schemas/Transaction"
           },
-          "password" : {
-            "type" : "string"
-          },
-          "firstname" : {
-            "type" : "string"
-          },
-          "surname" : {
+          "error" : {
             "type" : "string"
           }
         }
@@ -330,8 +404,8 @@
         "type" : "object",
         "properties" : {
           "id" : {
-            "type" : "integer",
-            "format" : "int64"
+            "type" : "string",
+            "format" : "uuid"
           },
           "title" : {
             "type" : "string"
@@ -345,68 +419,12 @@
           }
         }
       },
-      "RegisterResponse" : {
-        "type" : "object",
-        "properties" : {
-          "error" : {
-            "type" : "string"
-          },
-          "user" : {
-            "$ref" : "#/components/schemas/User"
-          }
-        }
-      },
-      "User" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "surname" : {
-            "type" : "string"
-          },
-          "email" : {
-            "type" : "string"
-          },
-          "joined" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "picture" : {
-            "$ref" : "#/components/schemas/Picture"
-          }
-        }
-      },
-      "FilteredFindRequest" : {
-        "type" : "object",
-        "properties" : {
-          "query" : {
-            "type" : "string"
-          },
-          "category" : {
-            "type" : "string"
-          },
-          "area" : {
-            "type" : "string"
-          },
-          "minPrice" : {
-            "type" : "number"
-          },
-          "maxPrice" : {
-            "type" : "number"
-          }
-        }
-      },
       "Post" : {
         "type" : "object",
         "properties" : {
           "id" : {
-            "type" : "integer",
-            "format" : "int64"
+            "type" : "string",
+            "format" : "uuid"
           },
           "creator" : {
             "$ref" : "#/components/schemas/User"
@@ -442,8 +460,114 @@
       "PostCategory" : {
         "type" : "object",
         "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
           "name" : {
             "type" : "string"
+          }
+        }
+      },
+      "Transaction" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "client" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "merchant" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "post" : {
+            "$ref" : "#/components/schemas/Post"
+          },
+          "notes" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "NotViewed", "AwaitingMerchantResponse", "AwaitingClientResponse", "FinishedSuccessfully", "Rejected" ]
+          },
+          "added" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "User" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "surname" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "joined" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "picture" : {
+            "$ref" : "#/components/schemas/Picture"
+          }
+        }
+      },
+      "RegisterForm" : {
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "firstname" : {
+            "type" : "string"
+          },
+          "surname" : {
+            "type" : "string"
+          }
+        }
+      },
+      "RegisterResponse" : {
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "type" : "string"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          }
+        }
+      },
+      "FilteredFindRequest" : {
+        "type" : "object",
+        "properties" : {
+          "query" : {
+            "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "area" : {
+            "type" : "string"
+          },
+          "minPrice" : {
+            "type" : "number"
+          },
+          "maxPrice" : {
+            "type" : "number"
           }
         }
       },
@@ -472,10 +596,28 @@
         }
       },
       "Message" : {
-        "type" : "object"
-      },
-      "Conversation" : {
-        "type" : "object"
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "added" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "contents" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "transactionId" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }
       }
     }
   }

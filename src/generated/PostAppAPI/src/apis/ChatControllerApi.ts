@@ -14,9 +14,16 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  Message,
+} from '../models';
+import {
+    MessageFromJSON,
+    MessageToJSON,
+} from '../models';
 
 export interface GetMessagesRequest {
-    chatId: number;
+    transactionId: string;
 }
 
 /**
@@ -26,33 +33,9 @@ export class ChatControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async getConversationsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<object>>> {
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/get_conversations`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     */
-    async getConversations(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<object>> {
-        const response = await this.getConversationsRaw(initOverrides);
-        return await response.value();
-    }
-
-    /**
-     */
-    async getMessagesRaw(requestParameters: GetMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<object>>> {
-        if (requestParameters.chatId === null || requestParameters.chatId === undefined) {
-            throw new runtime.RequiredError('chatId','Required parameter requestParameters.chatId was null or undefined when calling getMessages.');
+    async getMessagesRaw(requestParameters: GetMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Message>>> {
+        if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
+            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling getMessages.');
         }
 
         const queryParameters: any = {};
@@ -60,18 +43,18 @@ export class ChatControllerApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/get_messages/{chat_id}`.replace(`{${"chat_id"}}`, encodeURIComponent(String(requestParameters.chatId))),
+            path: `/get_messages/{transaction_id}`.replace(`{${"transaction_id"}}`, encodeURIComponent(String(requestParameters.transactionId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MessageFromJSON));
     }
 
     /**
      */
-    async getMessages(requestParameters: GetMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<object>> {
+    async getMessages(requestParameters: GetMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Message>> {
         const response = await this.getMessagesRaw(requestParameters, initOverrides);
         return await response.value();
     }

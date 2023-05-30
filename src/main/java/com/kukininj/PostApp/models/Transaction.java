@@ -3,30 +3,31 @@ package com.kukininj.PostApp.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-enum Status {
-    NotViewed,
-    AwaitingMerchantResponse,
-    AwaitingClientResponse,
-    FinishedSuccessfully,
-    Rejected;
-}
 @Entity
 public class Transaction {
+    public enum Status {
+        NotViewed,
+        AwaitingMerchantResponse,
+        AwaitingClientResponse,
+        FinishedSuccessfully,
+        Rejected;
+    }
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    public UUID id;
 
     @ManyToOne
-    User client;
+    public User client;
 
     @ManyToOne
-    User merchant;
+    public User merchant;
 
     @ManyToOne
-    Post post;
+    public Post post;
 
-    String notes;
-    Status status;
-    LocalDateTime added;
+    public String notes;
+    public Status status;
+    public LocalDateTime added;
 }

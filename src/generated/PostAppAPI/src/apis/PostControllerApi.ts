@@ -37,7 +37,7 @@ export interface GetByFilterRequest {
 }
 
 export interface GetPostRequest {
-    postId: number;
+    postId: string;
 }
 
 /**

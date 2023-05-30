@@ -16,62 +16,69 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface Picture
+ * @interface Message
  */
-export interface Picture {
+export interface Message {
     /**
      * 
      * @type {string}
-     * @memberof Picture
+     * @memberof Message
      */
     id?: string;
     /**
      * 
-     * @type {string}
-     * @memberof Picture
-     */
-    title?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Picture
-     */
-    filePath?: string;
-    /**
-     * 
      * @type {Date}
-     * @memberof Picture
+     * @memberof Message
      */
     added?: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    contents?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    userId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    transactionId?: string;
 }
 
 /**
- * Check if a given object implements the Picture interface.
+ * Check if a given object implements the Message interface.
  */
-export function instanceOfPicture(value: object): boolean {
+export function instanceOfMessage(value: object): boolean {
     let isInstance = true;
 
     return isInstance;
 }
 
-export function PictureFromJSON(json: any): Picture {
-    return PictureFromJSONTyped(json, false);
+export function MessageFromJSON(json: any): Message {
+    return MessageFromJSONTyped(json, false);
 }
 
-export function PictureFromJSONTyped(json: any, ignoreDiscriminator: boolean): Picture {
+export function MessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): Message {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'title': !exists(json, 'title') ? undefined : json['title'],
-        'filePath': !exists(json, 'filePath') ? undefined : json['filePath'],
         'added': !exists(json, 'added') ? undefined : (new Date(json['added'])),
+        'contents': !exists(json, 'contents') ? undefined : json['contents'],
+        'userId': !exists(json, 'userId') ? undefined : json['userId'],
+        'transactionId': !exists(json, 'transactionId') ? undefined : json['transactionId'],
     };
 }
 
-export function PictureToJSON(value?: Picture | null): any {
+export function MessageToJSON(value?: Message | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -81,9 +88,10 @@ export function PictureToJSON(value?: Picture | null): any {
     return {
         
         'id': value.id,
-        'title': value.title,
-        'filePath': value.filePath,
         'added': value.added === undefined ? undefined : (value.added.toISOString()),
+        'contents': value.contents,
+        'userId': value.userId,
+        'transactionId': value.transactionId,
     };
 }
 

@@ -16,48 +16,41 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface PostCategory
+ * @interface NewTransactionRequest
  */
-export interface PostCategory {
+export interface NewTransactionRequest {
     /**
      * 
      * @type {string}
-     * @memberof PostCategory
+     * @memberof NewTransactionRequest
      */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PostCategory
-     */
-    name?: string;
+    postID?: string;
 }
 
 /**
- * Check if a given object implements the PostCategory interface.
+ * Check if a given object implements the NewTransactionRequest interface.
  */
-export function instanceOfPostCategory(value: object): boolean {
+export function instanceOfNewTransactionRequest(value: object): boolean {
     let isInstance = true;
 
     return isInstance;
 }
 
-export function PostCategoryFromJSON(json: any): PostCategory {
-    return PostCategoryFromJSONTyped(json, false);
+export function NewTransactionRequestFromJSON(json: any): NewTransactionRequest {
+    return NewTransactionRequestFromJSONTyped(json, false);
 }
 
-export function PostCategoryFromJSONTyped(json: any, ignoreDiscriminator: boolean): PostCategory {
+export function NewTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): NewTransactionRequest {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
+        'postID': !exists(json, 'postID') ? undefined : json['postID'],
     };
 }
 
-export function PostCategoryToJSON(value?: PostCategory | null): any {
+export function NewTransactionRequestToJSON(value?: NewTransactionRequest | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -66,8 +59,7 @@ export function PostCategoryToJSON(value?: PostCategory | null): any {
     }
     return {
         
-        'id': value.id,
-        'name': value.name,
+        'postID': value.postID,
     };
 }
 

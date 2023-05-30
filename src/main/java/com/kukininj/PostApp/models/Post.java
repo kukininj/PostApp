@@ -2,19 +2,22 @@ package com.kukininj.PostApp.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 public class Post {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    @GeneratedValue
+    @UuidGenerator
+    public UUID id;
 
     @ManyToOne
     public User creator;
-    @OneToOne
+    @ManyToOne
     public Picture picture;
 
     @ManyToOne
