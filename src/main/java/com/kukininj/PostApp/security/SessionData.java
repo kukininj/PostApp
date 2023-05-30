@@ -1,25 +1,24 @@
 package com.kukininj.PostApp.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.io.Serializable;
-import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @SessionScope
 public class SessionData implements Serializable {
-    public Long userID = null;
+    public UUID userID = null;
 
     public boolean loggedIn() {
         return this.userID != null;
     }
-    public void setUser(Long userID) {
+    public void setUser(UUID userID) {
         this.userID = userID;
     }
 
-    public Long getUserID() {
+    public UUID getUserID() {
         return userID;
     }
 

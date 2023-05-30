@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Filter;
 
 @RestController
@@ -29,7 +30,7 @@ public class PostController {
             value = "/post/get/{post_id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Optional<Post>> getPost(@PathVariable long post_id) {
+    public ResponseEntity<Optional<Post>> getPost(@PathVariable UUID post_id) {
         return ResponseEntity.ok(service.getPost(post_id));
     }
 
@@ -51,7 +52,7 @@ public class PostController {
                         request.area,
                         request.category,
                         // TODO: change to request.picture_id when Picture functionality is finished
-                        1L
+                        UUID.fromString("00000000-0000-0000-0000-000000000000")
                 )
         );
     }

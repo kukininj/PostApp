@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 @Service
@@ -44,7 +45,7 @@ public class PostService {
             BigDecimal price,
             String area,
             String categoryName,
-            Long picture_id
+            UUID picture_id
     ) {
         Optional<User> user = userService.getActiveUser();
         Optional<PostCategory> category = categoryRepository.findByName(categoryName);
@@ -77,7 +78,7 @@ public class PostService {
         }
     }
 
-    public Optional<Post> getPost(Long postId) {
+    public Optional<Post> getPost(UUID postId) {
         return repository.findById(postId);
     }
 
