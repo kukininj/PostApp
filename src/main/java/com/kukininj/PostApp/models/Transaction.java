@@ -3,6 +3,7 @@ package com.kukininj.PostApp.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 enum Status {
     NotViewed,
@@ -14,19 +15,19 @@ enum Status {
 @Entity
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @GeneratedValue(generator = "UUID")
+    public UUID id;
 
     @ManyToOne
-    User client;
+    public User client;
 
     @ManyToOne
-    User merchant;
+    public User merchant;
 
     @ManyToOne
-    Post post;
+    public Post post;
 
-    String notes;
-    Status status;
-    LocalDateTime added;
+    public String notes;
+    public Status status;
+    public LocalDateTime added;
 }
