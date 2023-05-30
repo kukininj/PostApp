@@ -5,15 +5,15 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-enum Status {
-    NotViewed,
-    AwaitingMerchantResponse,
-    AwaitingClientResponse,
-    FinishedSuccessfully,
-    Rejected;
-}
 @Entity
 public class Transaction {
+    public enum Status {
+        NotViewed,
+        AwaitingMerchantResponse,
+        AwaitingClientResponse,
+        FinishedSuccessfully,
+        Rejected;
+    }
     @Id
     @GeneratedValue(generator = "UUID")
     public UUID id;
