@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Chat } from '../Api';
 import { useState } from 'react';
 import { Message, User } from 'PostAppAPI';
 import { SimpleMessage } from '../types/message';

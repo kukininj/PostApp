@@ -6,7 +6,7 @@ export const SimpleMessage: Message = {
         return Math.random().toString();
     },
     contents: "tresc",
-    userId: 0,
+    userId: "00000000-0000-0000-0000-000000000000",
     transactionId: "",
     added: new Date(2020, 2, 2),
 }

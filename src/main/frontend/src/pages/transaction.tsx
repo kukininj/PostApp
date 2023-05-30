@@ -3,10 +3,13 @@ import { ChatElement } from './chat';
 import { SimpleUser } from '../types/user';
 import { useParams } from 'react-router-dom';
 import { User } from 'PostAppAPI';
+import { SimpleNotViewed } from '../types/transaction';
 
 export const TransactionPage: React.FC<{}> = () => {
-    const [merchant, setMerchant] = React.useState<User>({...SimpleUser, id: 1});
-    const [client, setClient] = React.useState<User>({...SimpleUser, id: 2});
+    const [transaction, setTransaction] = React.useState(SimpleNotViewed);
+
+    const merchant = transaction.merchant || SimpleUser;
+    const client = transaction.client || SimpleUser;
 
     const { transactionID = "0" } = useParams();
 

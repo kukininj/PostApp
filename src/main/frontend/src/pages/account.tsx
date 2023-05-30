@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useParams, redirect, Link } from 'react-router-dom'
-import { SimpleAwaitingClientResponse, SimpleFinishedSuccessfully, SimpleNotViewed, SimpleRejected, Transaction } from '../types/transaction'
+import { SimpleAwaitingClientResponse, SimpleFinishedSuccessfully, SimpleNotViewed, SimpleRejected } from '../types/transaction'
 import { AppContext } from '../Api/app-context'
 import { SimpleUser } from '../types/user';
 import { TransactionSmallList } from './transaction-components';
