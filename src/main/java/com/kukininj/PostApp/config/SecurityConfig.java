@@ -50,7 +50,7 @@ public class SecurityConfig {
                     httpSecurityLogoutConfigurer.logoutUrl("/logout");
                 })
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> {
-                    httpSecuritySessionManagementConfigurer.maximumSessions(10);
+                    httpSecuritySessionManagementConfigurer.maximumSessions(100);
                     httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
                 }) ;
 
