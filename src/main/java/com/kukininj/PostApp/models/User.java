@@ -28,7 +28,7 @@ public class User {
     public String email;
     public LocalDateTime joined;
 
-    @OneToOne
+    @ManyToOne
     public Picture picture;
 
     @JsonIgnore
