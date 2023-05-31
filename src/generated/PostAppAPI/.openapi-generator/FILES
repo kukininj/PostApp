@@ -10,6 +10,7 @@ src/index.ts
 src/models/AddPostRequest.ts
 src/models/FilteredFindRequest.ts
 src/models/Message.ts
+src/models/NewMessage.ts
 src/models/NewTransactionRequest.ts
 src/models/NewTransactionResponse.ts
 src/models/Picture.ts

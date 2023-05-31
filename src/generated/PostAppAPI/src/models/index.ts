@@ -3,6 +3,7 @@
 export * from './AddPostRequest';
 export * from './FilteredFindRequest';
 export * from './Message';
+export * from './NewMessage';
 export * from './NewTransactionRequest';
 export * from './NewTransactionResponse';
 export * from './Picture';

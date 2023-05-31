@@ -16,6 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   Message,
+  NewMessage,
   NewTransactionRequest,
   NewTransactionResponse,
   Transaction,
@@ -23,6 +24,8 @@ import type {
 import {
     MessageFromJSON,
     MessageToJSON,
+    NewMessageFromJSON,
+    NewMessageToJSON,
     NewTransactionRequestFromJSON,
     NewTransactionRequestToJSON,
     NewTransactionResponseFromJSON,
@@ -45,7 +48,7 @@ export interface NewTransactionOperationRequest {
 
 export interface SendMessageRequest {
     transactionId: string;
-    body: string;
+    newMessage: NewMessage;
 }
 
 /**
@@ -147,8 +150,8 @@ export class TransactionControllerApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling sendMessage.');
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling sendMessage.');
+        if (requestParameters.newMessage === null || requestParameters.newMessage === undefined) {
+            throw new runtime.RequiredError('newMessage','Required parameter requestParameters.newMessage was null or undefined when calling sendMessage.');
         }
 
         const queryParameters: any = {};
@@ -162,7 +165,7 @@ export class TransactionControllerApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: NewMessageToJSON(requestParameters.newMessage),
         }, initOverrides);
 
         return new runtime.TextApiResponse(response) as any;
