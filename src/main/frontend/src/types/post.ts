@@ -3,7 +3,7 @@ import { SimpleUser } from './user';
 
 export const EmptyPost: Post = {
     get id() {
-        return "123e4567-e89b-12d3-a456-426614174000";
+        return Math.random().toString();
     },
     title: "Tytuł ogłoszenia",
     description: "opis",

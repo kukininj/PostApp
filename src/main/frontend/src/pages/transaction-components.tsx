@@ -1,5 +1,5 @@
+import { Transaction } from "PostAppAPI"
 import * as React from "react"
-import { Transaction } from "../types/transaction"
 import { Link } from "react-router-dom"
 
 
@@ -9,10 +9,10 @@ export const TransactionCardSmall: React.FC<{
     return (
         <li key={transaction.id} className="card bg-light" style={{width: "calc(25% - 15px)"}} >
             <Link to={`/transaction/${transaction.id}`} >
-                <img className="card-img-top w-100" style={{objectFit: "cover", aspectRatio: "2"}} src={transaction.picture?.href || ""} alt="obrazek" />
+                <img className="card-img-top w-100" style={{objectFit: "cover", aspectRatio: "2"}} src={transaction.post?.picture?.filePath || ""} alt="obrazek" />
             </Link>
             <div className="card-body d-flex justify-content-between">
-                <p className="card-text">{transaction.title}</p>
+                <p className="card-text">{transaction.post?.title}</p>
                 <p className="card-text">{transaction.status}</p>
             </div>
         </li>

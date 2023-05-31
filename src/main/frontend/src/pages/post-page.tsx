@@ -33,6 +33,10 @@ const PostPage: React.FC<{}> = () => {
         }).then(({ transaction, error }) => {
             if (transaction) {
                 alert("success!");
+                // Transactions.sendMessage({
+                //     transactionId: transaction.id || "",
+                //     newMessage: { contents: "witam!" }
+                // })
                 navigate(`/transaction/${transaction.id}`);
             } else if (error) {
                 console.log(error);
