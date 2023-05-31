@@ -6,6 +6,7 @@ import com.kukininj.PostApp.repository.PostRepository;
 import com.kukininj.PostApp.repository.TransactionRepository;
 import com.kukininj.PostApp.repository.UserRepository;
 import com.kukininj.PostApp.security.SessionData;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ public class TransactionService {
     @Autowired
     SessionData session;
 
+    @Transactional
     public Transaction createTransaction(
             UUID postId
     ) {
@@ -61,14 +63,21 @@ public class TransactionService {
         return transactions.save(transaction);
     }
 
-    public List<Message> getTransactionMessages(UUID transactionId) {
-        User user = users.findById(session.getUserID()).orElseThrow();
-        Optional<Transaction> t = transactions.findByIdAndClientOrMerchant(transactionId, user);
+    public Optional<List<Message>> getTransactionMessages(UUID transactionId) {
+        if (!session.loggedIn()) {
+            return Optional.empty();
+        }
+
+        Optional<User> user = users.findById(session.getUserID());
+        if (user.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Optional<Transaction> t = transactions.findByIdAndClientOrMerchant(transactionId, user.get());
         if (t.isPresent()) {
-            return messages.getMessagesByTransactionOrderByAdded(t.get());
+            return Optional.of(messages.getMessagesByTransactionOrderByAddedDesc(t.get()));
         } else {
-            // could also throw an error...
-            return new ArrayList<>();
+            return Optional.empty();
         }
     }
 
@@ -88,7 +97,14 @@ public class TransactionService {
     }
 
     public Optional<Transaction>getTransaction(UUID transactionId) {
-        User user = users.findById(session.getUserID()).orElseThrow();
-        return transactions.findByIdAndClientOrMerchant(transactionId, user);
+        if (!session.loggedIn()) {
+            return Optional.empty();
+        }
+        Optional<User> user = users.findById(session.getUserID());
+        if (user.isPresent()) {
+            return transactions.findByIdAndClientOrMerchant(transactionId, user.get());
+        } else {
+            return Optional.empty();
+        }
     }
 }

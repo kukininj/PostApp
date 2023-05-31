@@ -60,7 +60,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "type" : "string"
+                "$ref" : "#/components/schemas/NewMessage"
               }
             }
           },
@@ -277,7 +277,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "text/event-stream" : {
+              "*/*" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -376,6 +376,14 @@
             "enum" : [ "OK", "FAIL" ]
           },
           "error" : {
+            "type" : "string"
+          }
+        }
+      },
+      "NewMessage" : {
+        "type" : "object",
+        "properties" : {
+          "contents" : {
             "type" : "string"
           }
         }
