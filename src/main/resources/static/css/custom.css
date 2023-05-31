@@ -19,8 +19,9 @@ input[type="number"] {
 /* Tooltip text */
 .my-tooltip .my-tooltiptext {
   visibility: hidden;
-  display: block;
+  display: none;
   width: 120px;
+  max-width: unset;
   height: min-height;
   background-color: black;
   color: #fff;
@@ -38,4 +39,5 @@ input[type="number"] {
 /* Show the tooltip text when you mouse over the tooltip container */
 .my-tooltip:hover .my-tooltiptext {
   visibility: visible;
+  display: block;
 }

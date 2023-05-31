@@ -37,7 +37,7 @@ export const PostsList: React.FC<{
 }
 
 export const LatestPosts: React.FC<{}> = () => {
-    const [posts, setPosts] = React.useState([EmptyPost, EmptyPost]);
+    const [posts, setPosts] = React.useState([EmptyPost, EmptyPost, EmptyPost]);
 
     React.useEffect(() => {
         Posts.getLatest()
