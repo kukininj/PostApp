@@ -56,7 +56,7 @@ przykłady użycia:
 
 ## Baza danych
 
-<img alt="Diagram ERD"     src="docs/post_app - public.png">
+<img alt="Diagram ERD"     src="docs/post_app - public - 2.png">
 
 ## Widoki:
 
