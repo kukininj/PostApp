@@ -43,19 +43,15 @@ export const ChatElement: React.FC<{ transactionID: string, merchant: User, clie
         } else {
             source.onmessage = (response) => {
                 const data = JSON.parse(response.data);
-                console.log(response.type);
-                if (data.message) {
-                    const message = MessageFromJSONTyped(data.message, true);
+                const message = MessageFromJSONTyped(data, true);
+                console.log(response.data);
+                if (message) {
                     saved.push(message);
-                    console.log(saved);
-                    setMessages(Array.from(saved));
-
-                } else if (data.ping || response.type == "ping") {
-                    console.log("recieved ping");
-                } else {
-
-                    console.error("unnknown message", data)
+                    setMessages(Array.from(saved).reverse());
                 }
+            }
+            source.onerror = (e) => {
+                console.error("sse error " + e);
             }
             source.onopen = (e) => {
                 console.log("openning new source", e);
@@ -83,7 +79,7 @@ export const ChatElement: React.FC<{ transactionID: string, merchant: User, clie
                     contents: message
                 }
             }).then(response => {
-                if (response != true) {
+                if ("true" == new String(response)) {
                     console.error("failed to send message");
                 }
             })
