@@ -10,5 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, UUID> {
-    List<Message> getMessagesByTransactionOrderByAddedDesc(Transaction transaction);
+    List<Message> getMessagesByTransactionOrderByAddedAsc(Transaction transaction);
 }

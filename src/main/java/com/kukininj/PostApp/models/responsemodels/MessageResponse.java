@@ -2,32 +2,25 @@ package com.kukininj.PostApp.models.responsemodels;
 
 import com.kukininj.PostApp.models.Message;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 public class MessageResponse {
-    public Optional<Message> message;
-
-    public Optional<Ping> ping;
-
-    public static MessageResponse ping(Long seq) {
+    public UUID id;
+    public UUID userId;
+    public UUID transactionId;
+    public LocalDateTime added;
+    public String contents;
+    public MessageResponse() { }
+    public static MessageResponse fromMessage(Message m) {
         var r = new MessageResponse();
-        r.message = Optional.empty();
-        r.ping = Optional.of(new Ping(seq));
+        r.added = m.added;
+        r.id = m.id;
+        r.userId = m.user.id;
+        r.transactionId = m.transaction.id;
+        r.contents = m.contents;
         return r;
     }
 
-    public static MessageResponse message(Message message) {
-        var r = new MessageResponse();
-        r.message = Optional.of(message);
-        r.ping = Optional.empty();
-        return r;
-    }
-
-    public static class Ping {
-        public Long seq;
-
-        public Ping(Long seq) {
-            this.seq = seq;
-        }
-    }
 }
