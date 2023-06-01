@@ -6,13 +6,10 @@ import com.kukininj.PostApp.repository.PostRepository;
 import com.kukininj.PostApp.repository.TransactionRepository;
 import com.kukininj.PostApp.repository.UserRepository;
 import com.kukininj.PostApp.security.SessionData;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,7 +31,6 @@ public class TransactionService {
     @Autowired
     SessionData session;
 
-    @Transactional
     public Transaction createTransaction(
             UUID postId
     ) {
@@ -75,13 +71,13 @@ public class TransactionService {
 
         Optional<Transaction> t = transactions.findByIdAndClientOrMerchant(transactionId, user.get());
         if (t.isPresent()) {
-            return Optional.of(messages.getMessagesByTransactionOrderByAddedDesc(t.get()));
+            return Optional.of(messages.getMessagesByTransactionOrderByAddedAsc(t.get()));
         } else {
             return Optional.empty();
         }
     }
 
-    public Boolean sendMessage(UUID transactionId, String contents) {
+    public Message sendMessage(UUID transactionId, String contents) {
         Transaction t = transactions.findById(transactionId).orElseThrow();
         User user = users.findById(session.getUserID()).orElseThrow();
 
@@ -92,8 +88,7 @@ public class TransactionService {
         m.contents = contents;
         m.added = LocalDateTime.now();
 
-        messages.save(m);
-        return true;
+        return messages.save(m);
     }
 
     public Optional<Transaction>getTransaction(UUID transactionId) {
