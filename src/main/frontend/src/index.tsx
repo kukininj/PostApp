@@ -56,8 +56,6 @@ if (rootElement === null) throw new Error('Failed to find root element')
 
 const root = createRoot(rootElement);
 
-// window.API = Communication.open();
-
 root.render(
     <App />
 );
