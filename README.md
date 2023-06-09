@@ -9,7 +9,6 @@ technologie:
  <p float="left">
  <img alt="ReactJS"     src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1024px-React-icon.svg.png" width=100>
  <img alt="TypeScript"  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Typescript.svg/1024px-Typescript.svg.png" width=100>
- <img alt="Docker"      src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Docker_%28container_engine%29_logo.svg/1280px-Docker_%28container_engine%29_logo.svg.png" width=500> 
  </p>
 
 Aplikacja umożliwia dodawanie i przeglądanie ogłoszeń, komunikację sprzedawcy i klienta.
